@@ -5,7 +5,7 @@
 Arduboy2 arduboy;
 ATMsynth synth;
 int numFrames = 1;
-int framesSurvived;
+int framesSurvived = 0;
 
 const uint8_t PROGMEM gunshot[] = {
   // Number of tracks
@@ -59,6 +59,8 @@ const int START = 4;
 const struct {
   char *msg;
   int stateAfterInput[6];
+  int timeLimitFrames;
+  int stateAfterTimeLimitExceeded;
 } stateWithId[] = {
   // Menu
   {
@@ -71,6 +73,8 @@ const struct {
       START,
       START,
     },
+    60000,
+    MENU,
   },
   // Mistake
   {},
@@ -89,6 +93,8 @@ const struct {
       MISTAKE,
       MISTAKE,
     },
+    300,
+    MISTAKE,
   },
 };
 
@@ -111,15 +117,6 @@ void setup() {
 
 int state = MENU;
 int framesSinceLastState = 0;
-
-uint8_t success[] = {
-  A_BUTTON,
-  B_BUTTON,
-  UP_BUTTON,
-  RIGHT_BUTTON,
-  DOWN_BUTTON,
-  LEFT_BUTTON,
-};
 
 void loop() {
   if (!(arduboy.nextFrame())) return;
@@ -163,15 +160,12 @@ void loop() {
       "You survived for\n");
     arduboy.print(framesSurvived / 60);
     arduboy.print(" seconds.");
-    for (int i = 0; i < 6; i++) {
-      if (arduboy.justPressed(success[i])) {
-        framesSinceLastState = 0;
-        state = MENU;
-        break;
-      }
-    }
     break;
   default:
+    if (framesSinceLastState > stateWithId[state].timeLimitFrames) {
+      framesSinceLastState = 0;
+      state = stateWithId[state].stateAfterTimeLimitExceeded;
+    }
     arduboy.print(stateWithId[state].msg);
     for (int i = 0; i < 6; i++) {
       if (arduboy.justPressed(inputWithId[i])) {
@@ -183,6 +177,9 @@ void loop() {
     break;
   }
 
+  if (state != GAME_OVER) {
+    framesSurvived++;
+  }
   framesSinceLastState++;
   arduboy.display();
 }
