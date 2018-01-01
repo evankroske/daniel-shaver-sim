@@ -15,7 +15,7 @@ const uint8_t PROGMEM music[] = {
   // Addresses of tracks
   0x00, 0x00,
   0x03, 0x00,
-  0x09, 0x00,
+  0x06, 0x00,
 
   // Channels
   0x00,
@@ -24,11 +24,11 @@ const uint8_t PROGMEM music[] = {
   // Channel 3, noise
   0x02,
 
-  // Track 0 (mute channel)
+  // Track 0 (mute channel): 3 bytes
   0x40, 0,
   0x9F,
 
-  // Track 1 (unused)
+  // Track 1 (unused): 3 bytes
   0x9F,
   0x9F,
   0x9F,
