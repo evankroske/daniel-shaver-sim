@@ -6,9 +6,8 @@ Arduboy2 arduboy;
 ATMsynth synth;
 int numFrames;
 int framesSurvived;
-int framesLeft;
 
-const uint8_t PROGMEM music[] = {
+const uint8_t PROGMEM gunshot[] = {
   // Number of tracks
   0x03,
 
@@ -59,8 +58,25 @@ void setup() {
   arduboy.audio.on();
 
   numFrames = 1;
-  synth.play(music);
+  synth.play(gunshot);
 }
+
+const int MENU = 0;
+const int START = 1;
+const int MISTAKE = 2;
+const int BEING_SHOT = 3;
+const int GAME_OVER = 4;
+int state = MENU;
+int framesSinceLastState = 0;
+
+uint8_t success[] = {
+  A_BUTTON,
+  B_BUTTON,
+  UP_BUTTON,
+  RIGHT_BUTTON,
+  DOWN_BUTTON,
+  LEFT_BUTTON,
+};
 
 void loop() {
   if (!(arduboy.nextFrame())) return;
@@ -78,14 +94,61 @@ void loop() {
     return;
   }
 
-  arduboy.pollButtons();
   arduboy.clear();
-  if (arduboy.justPressed(B_BUTTON)) {
+  arduboy.pollButtons();
+
+  switch (state) {
+  case MENU:
+    arduboy.print("Daniel Shaver\nSimulator\n\nPress any button\nto play");
+
+    for (int i = 0; i < 6; i++) {
+      if (arduboy.justPressed(success[i])) {
+        state = START;
+        framesSinceLastState = 0;
+        break;
+      }
+    }
+    break;
+  case MISTAKE:
+    if (framesSinceLastState > 120) {
+      framesSinceLastState = 0;
+      state = BEING_SHOT;
+      break;
+    }
+    arduboy.print("Officer Langley:\nDon't!");
+    break;
+  case BEING_SHOT:
     synth.playPause();
+    framesSinceLastState = 0;
+    state = GAME_OVER;
+    break;
+  case GAME_OVER:
+    arduboy.print(
+      "Officer Brailsford\n"
+      "shot you five times\n"
+      "with his AR-15\n\n"
+      "You are dead");
+    for (int i = 0; i < 6; i++) {
+      if (arduboy.justPressed(success[i])) {
+        state = MENU;
+        framesSinceLastState = 0;
+        break;
+      }
+    }
+    break;
+  default:
+    if (arduboy.justPressed(B_BUTTON)) {
+      state = MISTAKE;
+      framesSinceLastState = 0;
+    }
+    if (arduboy.justPressed(A_BUTTON)) {
+      state = MISTAKE;
+      framesSinceLastState = 0;
+    }
+    arduboy.print(framesSurvived++);
+    break;
   }
-  if (arduboy.justPressed(A_BUTTON)) {
-    synth.playPause();
-  }
-  arduboy.print(framesSurvived++);
+
+  framesSinceLastState++;
   arduboy.display();
 }
