@@ -4,7 +4,7 @@
 
 Arduboy2 arduboy;
 ATMsynth synth;
-int numFrames;
+int numFrames = 1;
 int framesSurvived;
 
 const uint8_t PROGMEM gunshot[] = {
@@ -43,13 +43,62 @@ const uint8_t PROGMEM gunshot[] = {
   0x9F + 8,
   // Slow volume slide
   0x41, -8,
-
   // wait 128 ticks
   0x9F + 64,
   0x9F + 64,
-
   // stop channel
   0x9F,
+};
+
+const int MENU = 0;
+const int MISTAKE = 1;
+const int BEING_SHOT = 2;
+const int GAME_OVER = 3;
+const int START = 4;
+
+const struct {
+  char *msg;
+  int stateAfterInput[6];
+} stateWithId[] = {
+  // Menu
+  {
+    "Daniel Shaver\nSimulator\n\nPress any button\nto play",
+    {
+      START,
+      START,
+      START,
+      START,
+      START,
+      START,
+    },
+  },
+  // Mistake
+  {},
+  // Being shot
+  {},
+  // Game over
+  {},
+  // Start
+  {
+    "PRESS A RIGHT NOW!",
+    {
+      START,
+      MISTAKE,
+      MISTAKE,
+      MISTAKE,
+      MISTAKE,
+      MISTAKE,
+    },
+  },
+};
+
+uint8_t inputWithId[] = {
+  A_BUTTON,
+  B_BUTTON,
+  UP_BUTTON,
+  RIGHT_BUTTON,
+  DOWN_BUTTON,
+  LEFT_BUTTON,
 };
 
 void setup() {
@@ -57,15 +106,9 @@ void setup() {
   arduboy.setFrameRate(60);
   arduboy.audio.on();
 
-  numFrames = 1;
   synth.play(gunshot);
 }
 
-const int MENU = 0;
-const int START = 1;
-const int MISTAKE = 2;
-const int BEING_SHOT = 3;
-const int GAME_OVER = 4;
 int state = MENU;
 int framesSinceLastState = 0;
 
@@ -98,17 +141,6 @@ void loop() {
   arduboy.pollButtons();
 
   switch (state) {
-  case MENU:
-    arduboy.print("Daniel Shaver\nSimulator\n\nPress any button\nto play");
-
-    for (int i = 0; i < 6; i++) {
-      if (arduboy.justPressed(success[i])) {
-        state = START;
-        framesSinceLastState = 0;
-        break;
-      }
-    }
-    break;
   case MISTAKE:
     if (framesSinceLastState > 90) {
       framesSinceLastState = 0;
@@ -140,15 +172,14 @@ void loop() {
     }
     break;
   default:
-    if (arduboy.justPressed(B_BUTTON)) {
-      state = MISTAKE;
-      framesSinceLastState = 0;
+    arduboy.print(stateWithId[state].msg);
+    for (int i = 0; i < 6; i++) {
+      if (arduboy.justPressed(inputWithId[i])) {
+        framesSinceLastState = 0;
+        state = stateWithId[state].stateAfterInput[i];
+        break;
+      }
     }
-    if (arduboy.justPressed(A_BUTTON)) {
-      state = MISTAKE;
-      framesSinceLastState = 0;
-    }
-    arduboy.print(framesSurvived++);
     break;
   }
 
