@@ -80,14 +80,32 @@ const struct {
     60000,
     MENU,
   },
+
   // Mistake
-  {},
+  {
+    "Officer Langley:\n"
+    "Don't!",
+    {
+      BEING_SHOT,
+      BEING_SHOT,
+      BEING_SHOT,
+      BEING_SHOT,
+      BEING_SHOT,
+      BEING_SHOT,
+    },
+    90,
+    BEING_SHOT,
+  },
+
   // Being shot
   {},
+
   // Game over
   {},
+
   // Start
   {},
+
   // First command
   {
     "Stop! Stop!\n"
@@ -96,7 +114,7 @@ const struct {
     "Press the A Button!\n"
     "Press the A Button!",
     {
-      START,
+      FIRST_COMMAND,
       MISTAKE,
       MISTAKE,
       MISTAKE,
@@ -148,14 +166,6 @@ void loop() {
   arduboy.pollButtons();
 
   switch (state) {
-  case MISTAKE:
-    if (framesSinceLastState > 90) {
-      framesSinceLastState = 0;
-      state = BEING_SHOT;
-      break;
-    }
-    arduboy.print("Officer Langley:\nDon't!");
-    break;
   case BEING_SHOT:
     synth.playPause();
     framesSinceLastState = 0;
@@ -175,6 +185,7 @@ void loop() {
     framesSurvived = 0;
     framesSinceLastState = 0;
     state = FIRST_COMMAND;
+    break;
   default:
     if (framesSinceLastState > stateWithId[state].timeLimitFrames) {
       framesSinceLastState = 0;
