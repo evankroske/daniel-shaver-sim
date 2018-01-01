@@ -3,7 +3,7 @@
 #include <ATMlib.h>
 
 Arduboy2 arduboy;
-ATMsynth ATM;
+ATMsynth synth;
 int numFrames;
 int framesSurvived;
 int framesLeft;
@@ -59,7 +59,7 @@ void setup() {
   arduboy.audio.on();
 
   numFrames = 1;
-  ATM.play(music);
+  synth.play(music);
 }
 
 void loop() {
@@ -69,7 +69,7 @@ void loop() {
     arduboy.clear();
     arduboy.print("Loading");
     if (numFrames > 260) {
-      ATM.playPause();
+      synth.playPause();
       numFrames = 0;
     } else {
       numFrames++;
@@ -81,10 +81,10 @@ void loop() {
   arduboy.pollButtons();
   arduboy.clear();
   if (arduboy.justPressed(B_BUTTON)) {
-    ATM.playPause();
+    synth.playPause();
   }
   if (arduboy.justPressed(A_BUTTON)) {
-    ATM.playPause();
+    synth.playPause();
   }
   arduboy.print(framesSurvived++);
   arduboy.display();
