@@ -110,7 +110,7 @@ void loop() {
     }
     break;
   case MISTAKE:
-    if (framesSinceLastState > 120) {
+    if (framesSinceLastState > 90) {
       framesSinceLastState = 0;
       state = BEING_SHOT;
       break;
@@ -126,12 +126,15 @@ void loop() {
     arduboy.print(
       "Officer Brailsford\n"
       "shot you five times\n"
-      "with his AR-15\n\n"
-      "You are dead");
+      "with his AR-15.\n"
+      "You are dead.\n\n"
+      "You survived for\n");
+    arduboy.print(framesSurvived / 60);
+    arduboy.print(" seconds.");
     for (int i = 0; i < 6; i++) {
       if (arduboy.justPressed(success[i])) {
-        state = MENU;
         framesSinceLastState = 0;
+        state = MENU;
         break;
       }
     }
