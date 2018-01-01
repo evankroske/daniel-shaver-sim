@@ -55,6 +55,7 @@ const int MISTAKE = 1;
 const int BEING_SHOT = 2;
 const int GAME_OVER = 3;
 const int START = 4;
+const int FIRST_COMMAND = 5;
 
 const struct {
   char *msg;
@@ -64,7 +65,10 @@ const struct {
 } stateWithId[] = {
   // Menu
   {
-    "Daniel Shaver\nSimulator\n\nPress any button\nto play",
+    "Daniel Shaver\n"
+    "Simulator\n\n"
+    "Press any button\n"
+    "to play",
     {
       START,
       START,
@@ -83,8 +87,14 @@ const struct {
   // Game over
   {},
   // Start
+  {},
+  // First command
   {
-    "PRESS A RIGHT NOW!",
+    "Stop! Stop!\n"
+    "Hit the A button!\n"
+    "Both of you!\n"
+    "Press the A Button!\n"
+    "Press the A Button!",
     {
       START,
       MISTAKE,
@@ -93,7 +103,7 @@ const struct {
       MISTAKE,
       MISTAKE,
     },
-    300,
+    90,
     MISTAKE,
   },
 };
@@ -161,6 +171,10 @@ void loop() {
     arduboy.print(framesSurvived / 60);
     arduboy.print(" seconds.");
     break;
+  case START:
+    framesSurvived = 0;
+    framesSinceLastState = 0;
+    state = FIRST_COMMAND;
   default:
     if (framesSinceLastState > stateWithId[state].timeLimitFrames) {
       framesSinceLastState = 0;
