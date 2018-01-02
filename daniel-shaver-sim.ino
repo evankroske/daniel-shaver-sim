@@ -114,6 +114,18 @@ const char *msg[] = {
   "hear and understand\n"
   "me?",
 
+  // 12: Threat
+  "If you make a mistake\n"
+  "another mistake,\n"
+  "there's a very severe\n"
+  "possibility you're\n"
+  "both going to get\n"
+  "shot. Do you\n"
+  "understand that?",
+
+  // 13: Make the player fail
+  "",
+
 };
 const int stateAfterInput[][6] = {
   // 0: Menu
@@ -205,6 +217,26 @@ const int stateAfterInput[][6] = {
     12,
   },
 
+  // 12: Threat
+  {
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+  },
+
+  // 13: Make the player fail
+  {
+    15,
+    15,
+    15,
+    15,
+    15,
+    15,
+  },
+
 };
 const int timeLimitFrames[] = {
   // 0: Menu
@@ -242,6 +274,12 @@ const int timeLimitFrames[] = {
 
   // 11: Go over again
   180,
+
+  // 12: Threat
+  180,
+
+  // 13: Make the player fail
+  INT_MAX,
 
 };
 const int stateAfterTimeLimitExceeded[] = {
@@ -281,46 +319,16 @@ const int stateAfterTimeLimitExceeded[] = {
   // 11: Go over again
   MISTAKE,
 
+  // 12: Threat
+  MISTAKE,
+
+  // 13: Make the player fail
+  17,
+
 };
 
 
 /*
-  // 12: Threat
-  {
-    "If you make a mistake\n"
-    "another mistake,\n"
-    "there's a very severe\n"
-    "possibility you're\n"
-    "both going to get\n"
-    "shot. Do you\n"
-    "understand that?",
-    {
-      13,
-      13,
-      13,
-      13,
-      13,
-      13,
-    },
-    180,
-    MISTAKE,
-  },
-
-  // 14: Make the player fail
-  {
-    "",
-    {
-      15,
-      15,
-      15,
-      15,
-      15,
-      15,
-    },
-    INT_MAX,
-    17,
-  },
-
   // 15: Daniel asks a question
   {
     "You tried to ask a\n"
