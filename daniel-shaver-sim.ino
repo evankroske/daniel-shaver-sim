@@ -214,12 +214,33 @@ const struct {
     "hear and understand\n"
     "me?",
     {
-      11,
-      11,
-      11,
-      11,
-      11,
-      11,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+    },
+    180,
+    MISTAKE,
+  },
+
+  // 12: Threat
+  {
+    "If you make a mistake\n"
+    "another mistake,\n"
+    "there's a very severe\n"
+    "possibility you're\n"
+    "both going to get\n"
+    "shot. Do you\n"
+    "understand that?",
+    {
+      13,
+      13,
+      13,
+      13,
+      13,
+      13,
     },
     180,
     MISTAKE,
