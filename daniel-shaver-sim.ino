@@ -177,6 +177,16 @@ const int stateAfterInput[][6] = {
     MISTAKE,
   },
 
+  // 7: Who else is in the room?
+  {
+    8,
+    MISTAKE,
+    MISTAKE,
+    MISTAKE,
+    MISTAKE,
+    MISTAKE,
+  },
+
   // 8: Nobody else is in the room?
   {
     9,
@@ -330,20 +340,18 @@ const int stateAfterTimeLimitExceeded[] = {
 
 /*
   // 15: Daniel asks a question
+  "You tried to ask a\n"
+  "question",
   {
-    "You tried to ask a\n"
-    "question",
-    {
-      SHUT_UP,
-      SHUT_UP,
-      SHUT_UP,
-      SHUT_UP,
-      SHUT_UP,
-      SHUT_UP,
-    },
-    90,
+    SHUT_UP,
+    SHUT_UP,
+    SHUT_UP,
+    SHUT_UP,
+    SHUT_UP,
     SHUT_UP,
   },
+  90,
+  SHUT_UP,
 
   // 16: Shut up
   {
@@ -409,6 +417,7 @@ void loop() {
     framesSinceLastState = 0;
     state = GAME_OVER;
     break;
+
   case GAME_OVER:
     arduboy.print(
       "Officer Brailsford\n"
@@ -419,11 +428,13 @@ void loop() {
     arduboy.print(framesSurvived / 60);
     arduboy.print(" seconds.");
     break;
+
   case START:
     framesSurvived = 0;
     framesSinceLastState = 0;
     state = FIRST_COMMAND;
     break;
+
   default:
     if (framesSinceLastState > timeLimitFrames[state]) {
       framesSinceLastState = 0;
