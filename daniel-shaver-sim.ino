@@ -59,43 +59,67 @@ const int START = 4;
 const int FIRST_COMMAND = 5;
 const int SHUT_UP = 16;
 
-static const struct {
-  char *msg;
-  int stateAfterInput[6];
-  int timeLimitFrames;
-  int stateAfterTimeLimitExceeded;
-} stateWithId[] = {
+const char *msg[] = {
+  // 0: Menu
+  "Daniel Shaver\n"
+  "Simulator\n\n"
+  "Press any button\n"
+  "to play",
+
+  // 1: Mistake
+  "Officer Langley:\n"
+  "Don't!",
+
+  // 2: Being shot
+  "",
+
+  // 3: Game over
+  "",
+
+  // 4: Start
+  "",
+
+  // 5: First command
+  "Officer Brailsford:\n"
+  "Stop! Stop!\n"
+  "Hit the A button!\n"
+  "Both of you!\n"
+  "Press the A Button!\n"
+  "Press the A Button!",
+
+  // 6: Wait for instructions
+  "",
+
+  // 7: Who else is in the room?
+  "The first letter of\n"
+  "the alphabet is B?",
+
+  // 8: Nobody else is in the room?
+  "The first letter of\n"
+  "the alphabet is A?",
+
+  // 9: Are you positive?
+  "Are you positive?",
+
+};
+const int stateAfterInput[][6] = {
   // 0: Menu
   {
-    "Daniel Shaver\n"
-    "Simulator\n\n"
-    "Press any button\n"
-    "to play",
-    {
-      START,
-      START,
-      START,
-      START,
-      START,
-      START,
-    },
-    60000,
-    MENU,
+    START,
+    START,
+    START,
+    START,
+    START,
+    START,
   },
 
   // 1: Mistake
   {
-    "Officer Langley:\n"
-    "Don't!",
-    {
-      BEING_SHOT,
-      BEING_SHOT,
-      BEING_SHOT,
-      BEING_SHOT,
-      BEING_SHOT,
-      BEING_SHOT,
-    },
-    90,
+    BEING_SHOT,
+    BEING_SHOT,
+    BEING_SHOT,
+    BEING_SHOT,
+    BEING_SHOT,
     BEING_SHOT,
   },
 
@@ -110,86 +134,112 @@ static const struct {
 
   // 5: First command
   {
-    "Officer Brailsford:\n"
-    "Stop! Stop!\n"
-    "Hit the A button!\n"
-    "Both of you!\n"
-    "Press the A Button!\n"
-    "Press the A Button!",
-    {
-      6,
-      MISTAKE,
-      MISTAKE,
-      MISTAKE,
-      MISTAKE,
-      MISTAKE,
-    },
-    90,
+    6,
+    MISTAKE,
+    MISTAKE,
+    MISTAKE,
+    MISTAKE,
     MISTAKE,
   },
 
   // 6: Wait for instructions
   {
-    "",
-    {
-      MISTAKE,
-      MISTAKE,
-      MISTAKE,
-      MISTAKE,
-      MISTAKE,
-      MISTAKE,
-    },
-    600,
-    7,
-  },
-
-  // 7: Who else is in the room?
-  {
-    "The first letter of\n"
-    "the alphabet is B?",
-    {
-      8,
-      MISTAKE,
-      MISTAKE,
-      MISTAKE,
-      MISTAKE,
-      MISTAKE,
-    },
-    180,
+    MISTAKE,
+    MISTAKE,
+    MISTAKE,
+    MISTAKE,
+    MISTAKE,
     MISTAKE,
   },
 
   // 8: Nobody else is in the room?
   {
-    "The first letter of\n"
-    "the alphabet is A?",
-    {
-      9,
-      9,
-      MISTAKE,
-      MISTAKE,
-      MISTAKE,
-      MISTAKE,
-    },
-    180,
+    9,
+    9,
+    MISTAKE,
+    MISTAKE,
+    MISTAKE,
     MISTAKE,
   },
 
   // 9: Are you positive?
   {
-    "Are you positive?",
-    {
-      10,
-      10,
-      MISTAKE,
-      MISTAKE,
-      MISTAKE,
-      MISTAKE,
-    },
-    180,
-    MISTAKE
+    10,
+    10,
+    MISTAKE,
+    MISTAKE,
+    MISTAKE,
+    MISTAKE,
   },
 
+};
+const int timeLimitFrames[] = {
+  // 0: Menu
+  60000,
+
+  // 1: Mistake
+  90,
+
+  // 2: Being shot
+  0,
+
+  // 3: Game over
+  0,
+
+  // 4: Start
+  0,
+
+  // 5: First command
+  90,
+
+  // 6: Wait for instructions
+  7,
+
+  // 7: Who else is in the room?
+  180,
+
+  // 8: Nobody else is in the room?
+  180,
+
+  // 9: Are you positive?
+  180,
+
+};
+const int stateAfterTimeLimitExceeded[] = {
+  // 0: Menu
+  MENU,
+
+  // 1: Mistake
+  BEING_SHOT,
+
+  // 2: Being shot
+  0,
+
+  // 3: Game over
+  0,
+
+  // 4: Start
+  0,
+
+  // 5: First command
+  MISTAKE,
+
+  // 6: Wait for instructions
+  7,
+
+  // 7: Who else is in the room?
+  MISTAKE,
+
+  // 8: Nobody else is in the room?
+  MISTAKE,
+
+  // 9: Are you positive?
+  MISTAKE,
+
+};
+
+
+/*
   // 10: Failure to comprehend instructions
   {
     "OK. Apparently, we\n"
@@ -227,7 +277,6 @@ static const struct {
     MISTAKE,
   },
 
-/*
   // 12: Threat
   {
     "If you make a mistake\n"
@@ -299,8 +348,6 @@ static const struct {
   },
 */
 
-};
-
 uint8_t inputWithId[] = {
   A_BUTTON,
   B_BUTTON,
@@ -362,15 +409,15 @@ void loop() {
     state = FIRST_COMMAND;
     break;
   default:
-    if (framesSinceLastState > stateWithId[state].timeLimitFrames) {
+    if (framesSinceLastState > timeLimitFrames[state]) {
       framesSinceLastState = 0;
-      state = stateWithId[state].stateAfterTimeLimitExceeded;
+      state = stateAfterTimeLimitExceeded[state];
     }
-    arduboy.print(stateWithId[state].msg);
+    arduboy.print(msg[state]);
     for (int i = 0; i < 6; i++) {
       if (arduboy.justPressed(inputWithId[i])) {
         framesSinceLastState = 0;
-        state = stateWithId[state].stateAfterInput[i];
+        state = stateAfterInput[state][i];
         break;
       }
     }
