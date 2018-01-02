@@ -63,7 +63,7 @@ const struct {
   int timeLimitFrames;
   int stateAfterTimeLimitExceeded;
 } stateWithId[] = {
-  // Menu
+  // 0: Menu
   {
     "Daniel Shaver\n"
     "Simulator\n\n"
@@ -81,7 +81,7 @@ const struct {
     MENU,
   },
 
-  // Mistake
+  // 1: Mistake
   {
     "Officer Langley:\n"
     "Don't!",
@@ -97,24 +97,25 @@ const struct {
     BEING_SHOT,
   },
 
-  // Being shot
+  // 2: Being shot
   {},
 
-  // Game over
+  // 3: Game over
   {},
 
-  // Start
+  // 4: Start
   {},
 
-  // First command
+  // 5: First command
   {
+    "Officer Brailsford:\n"
     "Stop! Stop!\n"
     "Hit the A button!\n"
     "Both of you!\n"
     "Press the A Button!\n"
     "Press the A Button!",
     {
-      FIRST_COMMAND,
+      6,
       MISTAKE,
       MISTAKE,
       MISTAKE,
@@ -122,6 +123,36 @@ const struct {
       MISTAKE,
     },
     90,
+    MISTAKE,
+  },
+
+  // 6: Wait for instructions
+  {
+    "",
+    {
+      MISTAKE,
+      MISTAKE,
+      MISTAKE,
+      MISTAKE,
+      MISTAKE,
+      MISTAKE,
+    },
+    600,
+    7,
+  },
+
+  // 7: Who else is in the room?
+  {
+    "What's the first letter of the alphabet?",
+    {
+      8,
+      MISTAKE,
+      MISTAKE,
+      MISTAKE,
+      MISTAKE,
+      MISTAKE,
+    },
+    180,
     MISTAKE,
   },
 };
