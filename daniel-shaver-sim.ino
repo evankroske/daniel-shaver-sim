@@ -59,7 +59,7 @@ const int START = 4;
 const int FIRST_COMMAND = 5;
 const int SHUT_UP = 16;
 
-const struct {
+static const struct {
   char *msg;
   int stateAfterInput[6];
   int timeLimitFrames;
@@ -227,6 +227,7 @@ const struct {
     MISTAKE,
   },
 
+/*
   // 12: Threat
   {
     "If you make a mistake\n"
@@ -296,6 +297,7 @@ const struct {
     180,
     14,
   },
+*/
 
 };
 
