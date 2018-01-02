@@ -8,7 +8,7 @@ ATMsynth synth;
 int numFrames = 1;
 int framesSurvived = 0;
 
-const uint8_t PROGMEM gunshot[] = {
+static const uint8_t PROGMEM gunshot[] = {
   // Number of tracks
   0x03,
 
@@ -59,7 +59,7 @@ const int START = 4;
 const int FIRST_COMMAND = 5;
 const int SHUT_UP = 16;
 
-const char *msg[] = {
+static const char *msg[] = {
   // 0: Menu
   "Daniel Shaver\n"
   "Simulator\n\n"
@@ -127,7 +127,7 @@ const char *msg[] = {
   "",
 
 };
-const int stateAfterInput[][6] = {
+static const int stateAfterInput[][6] = {
   // 0: Menu
   {
     START,
@@ -248,7 +248,7 @@ const int stateAfterInput[][6] = {
   },
 
 };
-const int timeLimitFrames[] = {
+static const int timeLimitFrames[] = {
   // 0: Menu
   60000,
 
@@ -292,7 +292,7 @@ const int timeLimitFrames[] = {
   INT_MAX,
 
 };
-const int stateAfterTimeLimitExceeded[] = {
+static const int stateAfterTimeLimitExceeded[] = {
   // 0: Menu
   MENU,
 
