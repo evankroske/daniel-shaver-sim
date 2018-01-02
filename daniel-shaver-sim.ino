@@ -143,7 +143,8 @@ const struct {
 
   // 7: Who else is in the room?
   {
-    "What's the first letter of the alphabet?",
+    "The first letter of\n"
+    "the alphabet is B?",
     {
       8,
       MISTAKE,
@@ -155,6 +156,60 @@ const struct {
     180,
     MISTAKE,
   },
+
+  // 8: Nobody else is in the room?
+  {
+    "The first letter of\n"
+    "the alphabet is A?",
+    {
+      9,
+      9,
+      MISTAKE,
+      MISTAKE,
+      MISTAKE,
+      MISTAKE,
+    },
+    180,
+    MISTAKE,
+  },
+
+  // 9: Are you positive?
+  {
+    "Are you positive?",
+    {
+      10,
+      10,
+      MISTAKE,
+      MISTAKE,
+      MISTAKE,
+      MISTAKE,
+    },
+    180,
+    MISTAKE
+  },
+
+  // 10: Failure to comprehend instructions
+  {
+    "OK. Apparently,\n"
+    "we have a failure\n"
+    "for you to comprehend\n"
+    "simple instructions.\n"
+    "I've got to go over\n"
+    "some of them again.\n"
+    "OK, can you both\n"
+    "hear and understand me?",
+    {
+      11,
+      11,
+      11,
+      11,
+      11,
+      11,
+    },
+    180,
+    MISTAKE,
+  },
+
 };
 
 uint8_t inputWithId[] = {
