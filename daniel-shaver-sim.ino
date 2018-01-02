@@ -101,6 +101,19 @@ const char *msg[] = {
   // 9: Are you positive?
   "Are you positive?",
 
+  // 10: Failure to comprehend instructions
+  "OK. Apparently, we\n"
+  "have a failure for\n"
+  "you to comprehend\n"
+  "simple instructions.",
+
+  // 11: Go over again
+  "I've got to go over\n"
+  "some of them again.\n"
+  "OK, can you both\n"
+  "hear and understand\n"
+  "me?",
+
 };
 const int stateAfterInput[][6] = {
   // 0: Menu
@@ -172,6 +185,26 @@ const int stateAfterInput[][6] = {
     MISTAKE,
   },
 
+  // 10: Failure to comprehend instructions
+  {
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+  },
+
+  // 11: Go over again
+  {
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+  },
+
 };
 const int timeLimitFrames[] = {
   // 0: Menu
@@ -202,6 +235,12 @@ const int timeLimitFrames[] = {
   180,
 
   // 9: Are you positive?
+  180,
+
+  // 10: Failure to comprehend instructions
+  90,
+
+  // 11: Go over again
   180,
 
 };
@@ -236,47 +275,16 @@ const int stateAfterTimeLimitExceeded[] = {
   // 9: Are you positive?
   MISTAKE,
 
+  // 10: Failure to comprehend instructions
+  11,
+
+  // 11: Go over again
+  MISTAKE,
+
 };
 
 
 /*
-  // 10: Failure to comprehend instructions
-  {
-    "OK. Apparently, we\n"
-    "have a failure for\n"
-    "you to comprehend\n"
-    "simple instructions.",
-    {
-      11,
-      11,
-      11,
-      11,
-      11,
-      11,
-    },
-    90,
-    11,
-  },
-
-  // 11: Go over again
-  {
-    "I've got to go over\n"
-    "some of them again.\n"
-    "OK, can you both\n"
-    "hear and understand\n"
-    "me?",
-    {
-      12,
-      12,
-      12,
-      12,
-      12,
-      12,
-    },
-    180,
-    MISTAKE,
-  },
-
   // 12: Threat
   {
     "If you make a mistake\n"
