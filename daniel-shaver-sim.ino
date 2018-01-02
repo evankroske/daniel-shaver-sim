@@ -190,14 +190,29 @@ const struct {
 
   // 10: Failure to comprehend instructions
   {
-    "OK. Apparently,\n"
-    "we have a failure\n"
-    "for you to comprehend\n"
-    "simple instructions.\n"
+    "OK. Apparently, we\n"
+    "have a failure for\n"
+    "you to comprehend\n"
+    "simple instructions."
+    {
+      11,
+      11,
+      11,
+      11,
+      11,
+      11,
+    },
+    90,
+    11,
+  },
+
+  // 11: Go over again
+  {
     "I've got to go over\n"
     "some of them again.\n"
     "OK, can you both\n"
-    "hear and understand me?",
+    "hear and understand\n"
+    "me?",
     {
       11,
       11,
