@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Arduboy2.h>
 #include <ATMlib.h>
+#include <limits.h>
 
 Arduboy2 arduboy;
 ATMsynth synth;
@@ -56,6 +57,7 @@ const int BEING_SHOT = 2;
 const int GAME_OVER = 3;
 const int START = 4;
 const int FIRST_COMMAND = 5;
+const int SHUT_UP = 16;
 
 const struct {
   char *msg;
@@ -193,7 +195,7 @@ const struct {
     "OK. Apparently, we\n"
     "have a failure for\n"
     "you to comprehend\n"
-    "simple instructions."
+    "simple instructions.",
     {
       11,
       11,
@@ -244,6 +246,55 @@ const struct {
     },
     180,
     MISTAKE,
+  },
+
+  // 14: Make the player fail
+  {
+    "",
+    {
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+    },
+    INT_MAX,
+    17,
+  },
+
+  // 15: Daniel asks a question
+  {
+    "You tried to ask a\n"
+    "question",
+    {
+      SHUT_UP,
+      SHUT_UP,
+      SHUT_UP,
+      SHUT_UP,
+      SHUT_UP,
+      SHUT_UP,
+    },
+    90,
+    SHUT_UP,
+  },
+
+  // 16: Shut up
+  {
+    "Shut up! I'm not here\n"
+    "to be tactful or\n"
+    "diplomatic with you.\n"
+    "You listen, you obey",
+    {
+      14,
+      14,
+      14,
+      14,
+      14,
+      14,
+    },
+    180,
+    14,
   },
 
 };
