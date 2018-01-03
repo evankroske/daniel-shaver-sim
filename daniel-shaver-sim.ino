@@ -412,6 +412,95 @@ void loop() {
   arduboy.clear();
   arduboy.pollButtons();
 
+  char tmp[22 * 8];
+  tmp[0] = 'O';
+  tmp[1] = 'f';
+  tmp[2] = 'f';
+  tmp[3] = 'i';
+  tmp[4] = 'c';
+  tmp[5] = 'e';
+  tmp[6] = 'r';
+  tmp[7] = ' ';
+  tmp[8] = 'B';
+  tmp[9] = 'r';
+  tmp[10] = 'a';
+  tmp[11] = 'i';
+  tmp[12] = 'l';
+  tmp[13] = 's';
+  tmp[14] = 'f';
+  tmp[15] = 'o';
+  tmp[16] = 'r';
+  tmp[17] = 'd';
+  tmp[18] = '\n';
+  tmp[19] = 's';
+  tmp[20] = 'h';
+  tmp[21] = 'o';
+  tmp[22] = 't';
+  tmp[23] = ' ';
+  tmp[24] = 'y';
+  tmp[25] = 'o';
+  tmp[26] = 'u';
+  tmp[27] = ' ';
+  tmp[28] = 'f';
+  tmp[29] = 'i';
+  tmp[30] = 'v';
+  tmp[31] = 'e';
+  tmp[32] = ' ';
+  tmp[33] = 't';
+  tmp[34] = 'i';
+  tmp[35] = 'm';
+  tmp[36] = 'e';
+  tmp[37] = 's';
+  tmp[38] = '\n';
+  tmp[39] = 'w';
+  tmp[40] = 'i';
+  tmp[41] = 't';
+  tmp[42] = 'h';
+  tmp[43] = ' ';
+  tmp[44] = 'h';
+  tmp[45] = 'i';
+  tmp[46] = 's';
+  tmp[47] = ' ';
+  tmp[48] = 'A';
+  tmp[49] = 'R';
+  tmp[50] = '-';
+  tmp[51] = '1';
+  tmp[52] = '5';
+  tmp[53] = '.';
+  tmp[54] = '\n';
+  tmp[55] = 'Y';
+  tmp[56] = 'o';
+  tmp[57] = 'u';
+  tmp[58] = ' ';
+  tmp[59] = 'a';
+  tmp[60] = 'r';
+  tmp[61] = 'e';
+  tmp[62] = ' ';
+  tmp[63] = 'd';
+  tmp[64] = 'e';
+  tmp[65] = 'a';
+  tmp[66] = 'd';
+  tmp[67] = '.';
+  tmp[68] = '\n';
+  tmp[69] = '\n';
+  tmp[70] = 'Y';
+  tmp[71] = 'o';
+  tmp[72] = 'u';
+  tmp[73] = ' ';
+  tmp[74] = 's';
+  tmp[75] = 'u';
+  tmp[76] = 'r';
+  tmp[77] = 'v';
+  tmp[78] = 'i';
+  tmp[79] = 'v';
+  tmp[80] = 'e';
+  tmp[81] = 'd';
+  tmp[82] = ' ';
+  tmp[83] = 'f';
+  tmp[84] = 'o';
+  tmp[85] = 'r';
+  tmp[86] = '\n';
+  tmp[87] = '\0';
   switch (state) {
   case BEING_SHOT:
     synth.playPause();
@@ -420,12 +509,7 @@ void loop() {
     break;
 
   case GAME_OVER:
-    arduboy.print(
-      "Officer Brailsford\n"
-      "shot you five times\n"
-      "with his AR-15.\n"
-      "You are dead.\n\n"
-      "You survived for\n");
+    arduboy.print(tmp);
     arduboy.print(framesSurvived / 60);
     arduboy.print(" seconds.");
     break;
