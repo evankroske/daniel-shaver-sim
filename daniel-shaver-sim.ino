@@ -51,13 +51,14 @@ static const uint8_t PROGMEM gunshot[] = {
   0x9F,
 };
 
-const int MENU = 0;
-const int MISTAKE = 1;
-const int BEING_SHOT = 2;
-const int GAME_OVER = 3;
-const int START = 4;
-const int FIRST_COMMAND = 5;
-const int SHUT_UP = 16;
+typedef byte State;
+const State MENU = 0;
+const State MISTAKE = 1;
+const State BEING_SHOT = 2;
+const State GAME_OVER = 3;
+const State START = 4;
+const State FIRST_COMMAND = 5;
+const State SHUT_UP = 16;
 
 static const char *msg[] = {
   // 0: Menu
@@ -127,7 +128,7 @@ static const char *msg[] = {
   "",
 
 };
-static const int stateAfterInput[][6] = {
+static const State stateAfterInput[][6] = {
   // 0: Menu
   {
     START,
@@ -248,7 +249,7 @@ static const int stateAfterInput[][6] = {
   },
 
 };
-static const int timeLimitFrames[] = {
+static const State timeLimitFrames[] = {
   // 0: Menu
   60000,
 
@@ -292,7 +293,7 @@ static const int timeLimitFrames[] = {
   INT_MAX,
 
 };
-static const int stateAfterTimeLimitExceeded[] = {
+static const State stateAfterTimeLimitExceeded[] = {
   // 0: Menu
   MENU,
 
@@ -389,7 +390,7 @@ void setup() {
   synth.play(gunshot);
 }
 
-int state = MENU;
+State state = MENU;
 int framesSinceLastState = 0;
 
 void loop() {
