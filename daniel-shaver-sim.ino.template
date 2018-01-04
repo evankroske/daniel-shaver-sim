@@ -52,6 +52,9 @@ static const uint8_t PROGMEM gunshot[] = {
 };
 
 typedef byte State;
+
+$cpp_global
+
 const State MENU = 0;
 const State MISTAKE = 1;
 const State BEING_SHOT = 2;
@@ -441,7 +444,7 @@ void loop() {
       framesSinceLastState = 0;
       state = stateAfterTimeLimitExceeded[state];
     }
-    arduboy.print(msg[state]);
+    printMsgOfState(state);
     for (int i = 0; i < 6; i++) {
       if (arduboy.justPressed(inputWithId[i])) {
         framesSinceLastState = 0;
