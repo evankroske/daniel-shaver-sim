@@ -3,7 +3,7 @@ import string
 import sys
 
 stateWithName = dict(
-    menu=dict(
+    MENU=dict(
         msg=[
             'Daniel Shaver',
             'Simulator',
@@ -12,28 +12,28 @@ stateWithName = dict(
             'to play'
         ],
     ),
-    B=dict(
+    MISTAKE=dict(
         msg=[
             'Officer Langley:',
             "Don't!"
         ],
     ),
-    C=dict(
+    BEING_SHOT=dict(
         msg=[
             ''
         ],
     ),
-    D=dict(
+    GAME_OVER=dict(
         msg=[
             ''
         ],
     ),
-    E=dict(
+    START=dict(
         msg=[
             ''
         ],
     ),
-    F=dict(
+    FIRST_COMMAND=dict(
         msg=[
             'Officer Brailsford:',
             'Stop! Stop!',
@@ -43,29 +43,29 @@ stateWithName = dict(
             'Press the A Button!'
         ],
     ),
-    G=dict(
+    WAIT=dict(
         msg=[
             ''
         ],
     ),
-    H=dict(
+    WHO_ELSE=dict(
         msg=[
             'The first letter of',
             'the alphabet is B?'
         ],
     ),
-    I=dict(
+    NOBODY_ELSE=dict(
         msg=[
             'The first letter of',
             'the alphabet is A?'
         ],
     ),
-    J=dict(
+    POSITIVE=dict(
         msg=[
             'Are you positive?'
         ],
     ),
-    K=dict(
+    FTC=dict(
         msg=[
             'OK. Apparently, we',
             'have a failure for',
@@ -73,7 +73,7 @@ stateWithName = dict(
             'simple instructions.'
         ],
     ),
-    L=dict(
+    AGAIN=dict(
         msg=[
             "I've got to go over",
             'some of them again.',
@@ -82,7 +82,7 @@ stateWithName = dict(
             'me?'
         ],
     ),
-    M=dict(
+    THREAT=dict(
         msg=[
             'If you make a mistake',
             'another mistake,',
@@ -93,7 +93,7 @@ stateWithName = dict(
             'understand that?'
         ],
     ),
-    N=dict(
+    QUESTION=dict(
         msg=[
             ''
         ],
@@ -112,13 +112,35 @@ def main():
                 dict(cpp_global=cppFromStates(stateWithName))))
 
 def cppFromStates(stateWithName):
-    return """
+    namesAndStates = list(stateWithName.items())
+    template = string.Template("""
+$names_states
+
 void printMsgOfState(State state) {
-    char *msg = new char[4]{'D', 'a', 'n'};
-    arduboy.print(msg);
-    delete msg;
+  char *msg = {};
+  switch (state) {
+$cases
+  }
+  arduboy.print(msg);
+  delete msg;
 }
-""".strip()
+""".strip("\n"))
+    return template.substitute(
+        cases="\n".join(caseFromState(n, s) for n, s in namesAndStates),
+        names_states="\n".join(
+            "const State {} = {};".format(n, i)
+                for i, (n, s) in enumerate(namesAndStates)))
+
+def caseFromState(name, state):
+    msg = "\n".join(state["msg"]) + "\0"
+    return string.Template("""
+  case $name:
+    msg = new char[$len_msg]{$msg};
+    break;
+""".strip("\n")).substitute(
+        name=name,
+        len_msg=len(msg),
+        msg=", ".join(r"'\x{:x}'".format(ord(c)) for c in msg))
 
 if __name__ == "__main__":
     main()
