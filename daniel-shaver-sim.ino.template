@@ -55,127 +55,6 @@ typedef byte State;
 
 $cpp_global
 
-static const State stateAfterInput[][6] = {
-  // 0: Menu
-  {
-    START,
-    START,
-    START,
-    START,
-    START,
-    START,
-  },
-
-  // 1: Mistake
-  {
-    BEING_SHOT,
-    BEING_SHOT,
-    BEING_SHOT,
-    BEING_SHOT,
-    BEING_SHOT,
-    BEING_SHOT,
-  },
-
-  // 2: Being shot
-  {},
-
-  // 3: Game over
-  {},
-
-  // 4: Start
-  {},
-
-  // 5: First command
-  {
-    6,
-    MISTAKE,
-    MISTAKE,
-    MISTAKE,
-    MISTAKE,
-    MISTAKE,
-  },
-
-  // 6: Wait for instructions
-  {
-    MISTAKE,
-    MISTAKE,
-    MISTAKE,
-    MISTAKE,
-    MISTAKE,
-    MISTAKE,
-  },
-
-  // 7: Who else is in the room?
-  {
-    8,
-    MISTAKE,
-    MISTAKE,
-    MISTAKE,
-    MISTAKE,
-    MISTAKE,
-  },
-
-  // 8: Nobody else is in the room?
-  {
-    9,
-    9,
-    MISTAKE,
-    MISTAKE,
-    MISTAKE,
-    MISTAKE,
-  },
-
-  // 9: Are you positive?
-  {
-    10,
-    10,
-    MISTAKE,
-    MISTAKE,
-    MISTAKE,
-    MISTAKE,
-  },
-
-  // 10: Failure to comprehend instructions
-  {
-    11,
-    11,
-    11,
-    11,
-    11,
-    11,
-  },
-
-  // 11: Go over again
-  {
-    12,
-    12,
-    12,
-    12,
-    12,
-    12,
-  },
-
-  // 12: Threat
-  {
-    13,
-    13,
-    13,
-    13,
-    13,
-    13,
-  },
-
-  // 13: Make the player fail
-  {
-    15,
-    15,
-    15,
-    15,
-    15,
-    15,
-  },
-
-};
 static const State timeLimitFrames[] = {
   // 0: Menu
   60000,
@@ -372,7 +251,7 @@ void loop() {
     for (int i = 0; i < 6; i++) {
       if (arduboy.justPressed(inputWithId[i])) {
         framesSinceLastState = 0;
-        state = stateAfterInput[state][i];
+        state = stateAfterInput(state, i);
         break;
       }
     }
