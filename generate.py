@@ -19,6 +19,7 @@ stateWithName = dict(
             "START",
             "START",
         ],
+        timeLimitFrames="60000",
     ),
     MISTAKE=dict(
         msg=[
@@ -33,21 +34,25 @@ stateWithName = dict(
             "BEING_SHOT",
             "BEING_SHOT",
         ],
+        timeLimitFrames="90",
     ),
     BEING_SHOT=dict(
         msg=[
             ''
         ],
+        timeLimitFrames="0",
     ),
     GAME_OVER=dict(
         msg=[
             ''
         ],
+        timeLimitFrames="0",
     ),
     START=dict(
         msg=[
             ''
         ],
+        timeLimitFrames="0",
     ),
     FIRST_COMMAND=dict(
         msg=[
@@ -66,6 +71,7 @@ stateWithName = dict(
             "MISTAKE",
             "MISTAKE",
         ],
+        timeLimitFrames="90",
     ),
     WAIT=dict(
         msg=[
@@ -79,6 +85,7 @@ stateWithName = dict(
             "MISTAKE",
             "MISTAKE",
         ],
+        timeLimitFrames="600",
     ),
     WHO_ELSE=dict(
         msg=[
@@ -93,6 +100,7 @@ stateWithName = dict(
             "MISTAKE",
             "MISTAKE",
         ],
+        timeLimitFrames="180",
     ),
     NOBODY_ELSE=dict(
         msg=[
@@ -107,6 +115,7 @@ stateWithName = dict(
             "MISTAKE",
             "MISTAKE",
         ],
+        timeLimitFrames="180",
     ),
     POSITIVE=dict(
         msg=[
@@ -120,6 +129,7 @@ stateWithName = dict(
             "MISTAKE",
             "MISTAKE",
         ],
+        timeLimitFrames="180",
     ),
     FTC=dict(
         msg=[
@@ -136,6 +146,7 @@ stateWithName = dict(
             "AGAIN",
             "AGAIN",
         ],
+        timeLimitFrames="90",
     ),
     AGAIN=dict(
         msg=[
@@ -153,6 +164,7 @@ stateWithName = dict(
             "THREAT",
             "THREAT",
         ],
+        timeLimitFrames="180",
     ),
     THREAT=dict(
         msg=[
@@ -172,11 +184,13 @@ stateWithName = dict(
             "QUESTION",
             "QUESTION",
         ],
+        timeLimitFrames="180",
     ),
     QUESTION=dict(
         msg=[
             ''
         ],
+        timeLimitFrames="INT_MAX",
     ),
 )
 
@@ -212,6 +226,14 @@ $casesStateAfterInput
     return 255;
   }
 }
+
+int timeLimitFrames(State state) {
+  switch (state) {
+$casesTimeLimitFrames
+  default:
+    return INT_MAX;
+  }
+}
 """.strip("\n"))
     return template.substitute(
         names_states="\n".join(
@@ -220,7 +242,10 @@ $casesStateAfterInput
         casesPrintMsgOfState="\n".join(
             caseFromState(n, s) for n, s in namesAndStates),
         casesStateAfterInput="\n".join(
-            caseStateAfterInputOuter(n, s) for n, s in namesAndStates))
+            caseStateAfterInputOuter(n, s) for n, s in namesAndStates),
+        casesTimeLimitFrames="\n".join(
+            "  case {}: return {};".format(n, s["timeLimitFrames"])
+                for n, s in namesAndStates))
 
 def caseFromState(name, state):
     msg = "\n".join(state["msg"]) + "\0"

@@ -55,50 +55,6 @@ typedef byte State;
 
 $cpp_global
 
-static const State timeLimitFrames[] = {
-  // 0: Menu
-  60000,
-
-  // 1: Mistake
-  90,
-
-  // 2: Being shot
-  0,
-
-  // 3: Game over
-  0,
-
-  // 4: Start
-  0,
-
-  // 5: First command
-  90,
-
-  // 6: Wait for instructions
-  7,
-
-  // 7: Who else is in the room?
-  180,
-
-  // 8: Nobody else is in the room?
-  180,
-
-  // 9: Are you positive?
-  180,
-
-  // 10: Failure to comprehend instructions
-  90,
-
-  // 11: Go over again
-  180,
-
-  // 12: Threat
-  180,
-
-  // 13: Make the player fail
-  INT_MAX,
-
-};
 static const State stateAfterTimeLimitExceeded[] = {
   // 0: Menu
   MENU,
@@ -243,7 +199,7 @@ void loop() {
     break;
 
   default:
-    if (framesSinceLastState > timeLimitFrames[state]) {
+    if (framesSinceLastState > timeLimitFrames(state)) {
       framesSinceLastState = 0;
       state = stateAfterTimeLimitExceeded[state];
     }
