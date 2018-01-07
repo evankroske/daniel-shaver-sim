@@ -11,7 +11,7 @@ stateWithName = dict(
             'Press any button',
             'to play'
         ],
-        state_after_input=[
+        stateAfterInput=[
             "START",
             "START",
             "START",
@@ -25,7 +25,7 @@ stateWithName = dict(
             'Officer Langley:',
             "Don't!"
         ],
-        state_after_input=[
+        stateAfterInput=[
             "BEING_SHOT",
             "BEING_SHOT",
             "BEING_SHOT",
@@ -58,7 +58,7 @@ stateWithName = dict(
             'Press the A Button!',
             'Press the A Button!'
         ],
-        state_after_input=[
+        stateAfterInput=[
             "WAIT",
             "MISTAKE",
             "MISTAKE",
@@ -71,7 +71,7 @@ stateWithName = dict(
         msg=[
             ''
         ],
-        state_after_input=[
+        stateAfterInput=[
             "MISTAKE",
             "MISTAKE",
             "MISTAKE",
@@ -85,7 +85,7 @@ stateWithName = dict(
             'The first letter of',
             'the alphabet is B?'
         ],
-        state_after_input=[
+        stateAfterInput=[
             "NOBODY_ELSE",
             "MISTAKE",
             "MISTAKE",
@@ -99,7 +99,7 @@ stateWithName = dict(
             'The first letter of',
             'the alphabet is A?'
         ],
-        state_after_input=[
+        stateAfterInput=[
             "POSITIVE",
             "POSITIVE",
             "MISTAKE",
@@ -112,7 +112,7 @@ stateWithName = dict(
         msg=[
             'Are you positive?'
         ],
-        state_after_input=[
+        stateAfterInput=[
             "FTC",
             "FTC",
             "MISTAKE",
@@ -128,7 +128,7 @@ stateWithName = dict(
             'you to comprehend',
             'simple instructions.'
         ],
-        state_after_input=[
+        stateAfterInput=[
             "AGAIN",
             "AGAIN",
             "AGAIN",
@@ -145,7 +145,7 @@ stateWithName = dict(
             'hear and understand',
             'me?'
         ],
-        state_after_input=[
+        stateAfterInput=[
             "THREAT",
             "THREAT",
             "THREAT",
@@ -164,7 +164,7 @@ stateWithName = dict(
             'shot. Do you',
             'understand that?'
         ],
-        state_after_input=[
+        stateAfterInput=[
             "QUESTION",
             "QUESTION",
             "QUESTION",
@@ -234,7 +234,7 @@ def caseFromState(name, state):
         msg=", ".join(r"'\x{:x}'".format(ord(c)) for c in msg))
 
 def caseStateAfterInputOuter(name, state):
-    if "state_after_input" not in state:
+    if "stateAfterInput" not in state:
         return ""
 
     return string.Template("""
@@ -252,7 +252,7 @@ def caseStateAfterInputInner(state, i):
     return string.Template("""
     case $i:
       return $stateAfterInput;
-""".strip("\n")).substitute(i=i, stateAfterInput=state["state_after_input"][i])
+""".strip("\n")).substitute(i=i, stateAfterInput=state["stateAfterInput"][i])
 
 if __name__ == "__main__":
     main()
