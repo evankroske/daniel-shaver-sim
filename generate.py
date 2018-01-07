@@ -20,6 +20,7 @@ stateWithName = dict(
             "START",
         ],
         timeLimitFrames="60000",
+        stateAfterTimeLimitExceeded="MENU",
     ),
     MISTAKE=dict(
         msg=[
@@ -35,24 +36,28 @@ stateWithName = dict(
             "BEING_SHOT",
         ],
         timeLimitFrames="90",
+        stateAfterTimeLimitExceeded="BEING_SHOT",
     ),
     BEING_SHOT=dict(
         msg=[
             ''
         ],
         timeLimitFrames="0",
+        stateAfterTimeLimitExceeded="ERROR",
     ),
     GAME_OVER=dict(
         msg=[
             ''
         ],
         timeLimitFrames="0",
+        stateAfterTimeLimitExceeded="ERROR",
     ),
     START=dict(
         msg=[
             ''
         ],
         timeLimitFrames="0",
+        stateAfterTimeLimitExceeded="ERROR",
     ),
     FIRST_COMMAND=dict(
         msg=[
@@ -72,6 +77,7 @@ stateWithName = dict(
             "MISTAKE",
         ],
         timeLimitFrames="90",
+        stateAfterTimeLimitExceeded="MISTAKE",
     ),
     WAIT=dict(
         msg=[
@@ -86,6 +92,7 @@ stateWithName = dict(
             "MISTAKE",
         ],
         timeLimitFrames="600",
+        stateAfterTimeLimitExceeded="WHO_ELSE",
     ),
     WHO_ELSE=dict(
         msg=[
@@ -101,6 +108,7 @@ stateWithName = dict(
             "MISTAKE",
         ],
         timeLimitFrames="180",
+        stateAfterTimeLimitExceeded="MISTAKE",
     ),
     NOBODY_ELSE=dict(
         msg=[
@@ -116,6 +124,7 @@ stateWithName = dict(
             "MISTAKE",
         ],
         timeLimitFrames="180",
+        stateAfterTimeLimitExceeded="MISTAKE",
     ),
     POSITIVE=dict(
         msg=[
@@ -130,6 +139,7 @@ stateWithName = dict(
             "MISTAKE",
         ],
         timeLimitFrames="180",
+        stateAfterTimeLimitExceeded="MISTAKE",
     ),
     FTC=dict(
         msg=[
@@ -147,6 +157,7 @@ stateWithName = dict(
             "AGAIN",
         ],
         timeLimitFrames="90",
+        stateAfterTimeLimitExceeded="AGAIN",
     ),
     AGAIN=dict(
         msg=[
@@ -165,6 +176,7 @@ stateWithName = dict(
             "THREAT",
         ],
         timeLimitFrames="180",
+        stateAfterTimeLimitExceeded="MISTAKE",
     ),
     THREAT=dict(
         msg=[
@@ -185,12 +197,55 @@ stateWithName = dict(
             "QUESTION",
         ],
         timeLimitFrames="180",
+        stateAfterTimeLimitExceeded="MISTAKE",
     ),
     QUESTION=dict(
         msg=[
-            ''
+            "[You try to ask",
+            "what's going on]",
+        ],
+        stateAfterInput=[
+            "SHUT_UP",
+            "SHUT_UP",
+            "SHUT_UP",
+            "SHUT_UP",
+            "SHUT_UP",
+            "SHUT_UP",
+        ],
+        timeLimitFrames="90",
+        stateAfterTimeLimitExceeded="SHUT_UP",
+    ),
+    ERROR=dict(
+        msg=[
+            "ERROR:",
+            "You broke the game."
+            "",
+            "Please restart your",
+            "Arduboy."
+        ],
+        stateAfterInput=[
+            "ERROR",
+            "ERROR",
+            "ERROR",
+            "ERROR",
+            "ERROR",
+            "ERROR",
         ],
         timeLimitFrames="INT_MAX",
+        stateAfterTimeLimitExceeded="ERROR",
+    ),
+    SHUT_UP=dict(
+        msg=[],
+        stateAfterInput=[
+            "ERROR",
+            "ERROR",
+            "ERROR",
+            "ERROR",
+            "ERROR",
+            "ERROR",
+        ],
+        timeLimitFrames="180",
+        stateAfterTimeLimitExceeded="ERROR",
     ),
 )
 
@@ -223,7 +278,7 @@ State stateAfterInput(State state, int inputIndex) {
   switch (state) {
 $casesStateAfterInput
   default:
-    return 255;
+    return ERROR;
   }
 }
 
@@ -232,6 +287,13 @@ int timeLimitFrames(State state) {
 $casesTimeLimitFrames
   default:
     return INT_MAX;
+  }
+}
+
+State stateAfterTimeLimitExceeded(State state) {
+  switch (state) {
+$casesStateAfterTimeLimitExceeded
+  default: return ERROR;
   }
 }
 """.strip("\n"))
@@ -245,6 +307,9 @@ $casesTimeLimitFrames
             caseStateAfterInputOuter(n, s) for n, s in namesAndStates),
         casesTimeLimitFrames="\n".join(
             "  case {}: return {};".format(n, s["timeLimitFrames"])
+                for n, s in namesAndStates),
+        casesStateAfterTimeLimitExceeded="\n".join(
+            "  case {}: return {};".format(n, s["stateAfterTimeLimitExceeded"])
                 for n, s in namesAndStates))
 
 def caseFromState(name, state):
@@ -266,8 +331,7 @@ def caseStateAfterInputOuter(name, state):
   case $name:
     switch (inputIndex) {
 $cases
-    default:
-      return 255;
+    default: return ERROR;
     }
 """.strip("\n")).substitute(
         name=name,
