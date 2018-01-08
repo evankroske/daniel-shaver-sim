@@ -55,40 +55,6 @@ typedef byte State;
 
 $cpp_global
 
-/*
-  // 15: Daniel asks a question
-  "You tried to ask a\n"
-  "question",
-  {
-    SHUT_UP,
-    SHUT_UP,
-    SHUT_UP,
-    SHUT_UP,
-    SHUT_UP,
-    SHUT_UP,
-  },
-  90,
-  SHUT_UP,
-
-  // 16: Shut up
-  {
-    "Shut up! I'm not here\n"
-    "to be tactful or\n"
-    "diplomatic with you.\n"
-    "You listen, you obey",
-    {
-      14,
-      14,
-      14,
-      14,
-      14,
-      14,
-    },
-    180,
-    14,
-  },
-*/
-
 uint8_t inputWithId[] = {
   A_BUTTON,
   B_BUTTON,

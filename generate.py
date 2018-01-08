@@ -3,6 +3,26 @@ import string
 import sys
 
 stateWithName = dict(
+    ERROR=dict(
+        msg=[
+            "ERROR:",
+            "You broke the game."
+            "",
+            "Please restart your",
+            "Arduboy."
+        ],
+        stateAfterInput=[
+            "ERROR",
+            "ERROR",
+            "ERROR",
+            "ERROR",
+            "ERROR",
+            "ERROR",
+        ],
+        timeLimitFrames="INT_MAX",
+        stateAfterTimeLimitExceeded="ERROR",
+    ),
+
     MENU=dict(
         msg=[
             'Daniel Shaver',
@@ -22,6 +42,7 @@ stateWithName = dict(
         timeLimitFrames="60000",
         stateAfterTimeLimitExceeded="MENU",
     ),
+
     MISTAKE=dict(
         msg=[
             'Officer Langley:',
@@ -38,27 +59,13 @@ stateWithName = dict(
         timeLimitFrames="90",
         stateAfterTimeLimitExceeded="BEING_SHOT",
     ),
-    BEING_SHOT=dict(
-        msg=[
-            ''
-        ],
-        timeLimitFrames="0",
-        stateAfterTimeLimitExceeded="ERROR",
-    ),
-    GAME_OVER=dict(
-        msg=[
-            ''
-        ],
-        timeLimitFrames="0",
-        stateAfterTimeLimitExceeded="ERROR",
-    ),
-    START=dict(
-        msg=[
-            ''
-        ],
-        timeLimitFrames="0",
-        stateAfterTimeLimitExceeded="ERROR",
-    ),
+
+    BEING_SHOT=dict(),
+
+    GAME_OVER=dict(),
+
+    START=dict(),
+
     FIRST_COMMAND=dict(
         msg=[
             'Officer Brailsford:',
@@ -79,10 +86,8 @@ stateWithName = dict(
         timeLimitFrames="90",
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
+
     WAIT=dict(
-        msg=[
-            ''
-        ],
         stateAfterInput=[
             "MISTAKE",
             "MISTAKE",
@@ -94,6 +99,7 @@ stateWithName = dict(
         timeLimitFrames="600",
         stateAfterTimeLimitExceeded="WHO_ELSE",
     ),
+
     WHO_ELSE=dict(
         msg=[
             'The first letter of',
@@ -110,6 +116,7 @@ stateWithName = dict(
         timeLimitFrames="180",
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
+
     NOBODY_ELSE=dict(
         msg=[
             'The first letter of',
@@ -126,6 +133,7 @@ stateWithName = dict(
         timeLimitFrames="180",
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
+
     POSITIVE=dict(
         msg=[
             'Are you positive?'
@@ -141,6 +149,7 @@ stateWithName = dict(
         timeLimitFrames="180",
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
+
     FTC=dict(
         msg=[
             'OK. Apparently, we',
@@ -159,6 +168,7 @@ stateWithName = dict(
         timeLimitFrames="90",
         stateAfterTimeLimitExceeded="AGAIN",
     ),
+
     AGAIN=dict(
         msg=[
             "I've got to go over",
@@ -178,6 +188,7 @@ stateWithName = dict(
         timeLimitFrames="180",
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
+
     THREAT=dict(
         msg=[
             'If you make a mistake',
@@ -199,6 +210,7 @@ stateWithName = dict(
         timeLimitFrames="180",
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
+
     QUESTION=dict(
         msg=[
             "[You try to ask",
@@ -215,37 +227,41 @@ stateWithName = dict(
         timeLimitFrames="90",
         stateAfterTimeLimitExceeded="SHUT_UP",
     ),
-    ERROR=dict(
-        msg=[
-            "ERROR:",
-            "You broke the game."
-            "",
-            "Please restart your",
-            "Arduboy."
-        ],
-        stateAfterInput=[
-            "ERROR",
-            "ERROR",
-            "ERROR",
-            "ERROR",
-            "ERROR",
-            "ERROR",
-        ],
-        timeLimitFrames="INT_MAX",
-        stateAfterTimeLimitExceeded="ERROR",
-    ),
+
     SHUT_UP=dict(
-        msg=[],
+        msg=[
+            "Shut up! I'm not here",
+            "to be tactful or",
+            "diplomatic with you.",
+            "You listen, you obey",
+        ],
         stateAfterInput=[
-            "ERROR",
-            "ERROR",
-            "ERROR",
-            "ERROR",
-            "ERROR",
-            "ERROR",
+            "CROSS_ARMS",
+            "CROSS_ARMS",
+            "CROSS_ARMS",
+            "CROSS_ARMS",
+            "CROSS_ARMS",
+            "CROSS_ARMS",
         ],
         timeLimitFrames="180",
-        stateAfterTimeLimitExceeded="ERROR",
+        stateAfterTimeLimitExceeded="CROSS_ARMS",
+    ),
+
+    CROSS_ARMS=dict(
+        msg=[
+            "[You cross your arms",
+            "unconciously]",
+        ],
+        stateAfterInput=[
+            "CROSS_ARMS",
+            "CROSS_ARMS",
+            "CROSS_ARMS",
+            "CROSS_ARMS",
+            "CROSS_ARMS",
+            "CROSS_ARMS",
+        ],
+        timeLimitFrames="180",
+        stateAfterTimeLimitExceeded="CROSS_ARMS",
     ),
 )
 
@@ -302,15 +318,21 @@ $casesStateAfterTimeLimitExceeded
             "const State {} = {};".format(n, i)
                 for i, (n, s) in enumerate(namesAndStates)),
         casesPrintMsgOfState="\n".join(
-            caseFromState(n, s) for n, s in namesAndStates),
+            caseFromState(n, s)
+                for n, s in namesAndStates
+                if "msg" in s),
         casesStateAfterInput="\n".join(
-            caseStateAfterInputOuter(n, s) for n, s in namesAndStates),
+            caseStateAfterInputOuter(n, s)
+                for n, s in namesAndStates
+                if "stateAfterInput" in s),
         casesTimeLimitFrames="\n".join(
             "  case {}: return {};".format(n, s["timeLimitFrames"])
-                for n, s in namesAndStates),
+                for n, s in namesAndStates
+                if "timeLimitFrames" in s),
         casesStateAfterTimeLimitExceeded="\n".join(
             "  case {}: return {};".format(n, s["stateAfterTimeLimitExceeded"])
-                for n, s in namesAndStates))
+                for n, s in namesAndStates
+                if "stateAfterTimeLimitExceeded" in s))
 
 def caseFromState(name, state):
     msg = "\n".join(state["msg"]) + "\0"
