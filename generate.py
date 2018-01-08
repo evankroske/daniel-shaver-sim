@@ -239,16 +239,8 @@ stateWithName = dict(
             "[You try to ask",
             "what's going on]",
         ],
-        stateAfterInput=[
-            "SHUT_UP",
-            "SHUT_UP",
-            "SHUT_UP",
-            "SHUT_UP",
-            "SHUT_UP",
-            "SHUT_UP",
-        ],
+        stateNext="SHUT_UP",
         timeLimitFrames="90",
-        stateAfterTimeLimitExceeded="SHUT_UP",
     ),
 
     SHUT_UP=state(
@@ -258,16 +250,8 @@ stateWithName = dict(
             "diplomatic with you.",
             "You listen, you obey",
         ],
-        stateAfterInput=[
-            "CROSS_ARMS",
-            "CROSS_ARMS",
-            "CROSS_ARMS",
-            "CROSS_ARMS",
-            "CROSS_ARMS",
-            "CROSS_ARMS",
-        ],
+        stateNext="CROSS_ARMS",
         timeLimitFrames="180",
-        stateAfterTimeLimitExceeded="CROSS_ARMS",
     ),
 
     CROSS_ARMS=state(
@@ -275,16 +259,8 @@ stateWithName = dict(
             "[You cross your arms",
             "unconciously]",
         ],
-        stateAfterInput=[
-            "DID_I",
-            "DID_I",
-            "DID_I",
-            "DID_I",
-            "DID_I",
-            "DID_I",
-        ],
+        stateNext="DID_I",
         timeLimitFrames="180",
-        stateAfterTimeLimitExceeded="DID_I",
     ),
 
     DID_I=state(
@@ -293,20 +269,21 @@ stateWithName = dict(
             "tell you to move,",
             "young man?",
         ],
-        stateAfterInput=[
-            "UNCROSS_ARMS",
-            "UNCROSS_ARMS",
-            "UNCROSS_ARMS",
-            "UNCROSS_ARMS",
-            "UNCROSS_ARMS",
-            "UNCROSS_ARMS",
-        ],
+        stateNext="UNCROSS_ARMS",
         timeLimitFrames="180",
-        stateAfterTimeLimitExceeded="UNCROSS_ARMS",
     ),
 
     UNCROSS_ARMS=state(
+        msg=[
+            "[You put your hands",
+            "back out]",
+            "No sir no sir no sir",
+        ],
+        stateNext="PRETZEL",
+        timeLimitFrames="180",
     ),
+
+    PRETZEL=state()
 )
 
 def main():
