@@ -55,7 +55,7 @@ stateWithName = dict(
             'to play'
         ],
         stateAfterInput=[
-            "START",
+            "PRETZEL", # TODO: change back to START
             "START",
             "START",
             "START",
@@ -283,7 +283,15 @@ stateWithName = dict(
         timeLimitFrames="180",
     ),
 
-    PRETZEL=state()
+    PRETZEL=state(
+        msg=[
+            "Press and hold A and",
+            "B, and press up and",
+            "then down.",
+        ],
+    ),
+
+    REPEAT_QUESTION=state(),
 )
 
 def main():

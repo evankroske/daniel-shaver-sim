@@ -94,6 +94,8 @@ void loop() {
   arduboy.clear();
   arduboy.pollButtons();
 
+  static byte extraState = 0;
+
   switch (state) {
   case BEING_SHOT:
     synth.playPause();
@@ -116,6 +118,42 @@ void loop() {
     framesSurvived = 0;
     framesSinceLastState = 0;
     state = FIRST_COMMAND;
+    break;
+
+  case PRETZEL:
+    if (framesSinceLastState > 300) {
+      extraState = 0x0;
+      framesSinceLastState = 0;
+      state = MISTAKE;
+      break;
+    }
+    printMsgOfState(state);
+    if (arduboy.pressed(A_BUTTON | B_BUTTON)) {
+      extraState |= 0x1;
+    }
+    if (arduboy.justPressed(UP_BUTTON)) {
+      if ((extraState & 0x2) != 0) {
+        extraState = 0x0;
+        framesSinceLastState = 0;
+        state = MISTAKE;
+        break;
+      }
+      extraState |= 0x2;
+    }
+    if (arduboy.justPressed(DOWN_BUTTON)) {
+      if ((extraState & 0x4) != 0 || (extraState & 0x2) == 0) {
+        extraState = 0x0;
+        framesSinceLastState = 0;
+        state = MISTAKE;
+        break;
+      }
+      extraState |= 0x4;
+    }
+    if (extraState == 0x7) {
+      extraState = 0x0;
+      framesSinceLastState = 0;
+      state = REPEAT_QUESTION;
+    }
     break;
 
   default:
