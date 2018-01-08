@@ -34,16 +34,8 @@ stateWithName = dict(
             "Please restart your",
             "Arduboy."
         ],
-        stateAfterInput=[
-            "ERROR",
-            "ERROR",
-            "ERROR",
-            "ERROR",
-            "ERROR",
-            "ERROR",
-        ],
+        stateNext="ERROR",
         timeLimitFrames="INT_MAX",
-        stateAfterTimeLimitExceeded="ERROR",
     ),
 
     MENU=state(
