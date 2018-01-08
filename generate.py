@@ -2,8 +2,31 @@
 import string
 import sys
 
+def state(
+        msg=None,
+        stateAfterInput=None,
+        timeLimitFrames=None,
+        stateAfterTimeLimitExceeded=None,
+        stateNext=None):
+    result = {}
+    if msg is not None:
+        result["msg"] = msg
+    if timeLimitFrames is not None:
+        result["timeLimitFrames"] = timeLimitFrames
+
+    if stateNext is not None:
+        result["stateAfterInput"] = [stateNext] * 6
+        result["stateAfterTimeLimitExceeded"] = stateNext
+        return result
+
+    if stateAfterInput is not None:
+        result["stateAfterInput"] = stateAfterInput
+    if stateAfterTimeLimitExceeded is not None:
+        result["stateAfterTimeLimitExceeded"] = stateAfterTimeLimitExceeded
+    return result
+
 stateWithName = dict(
-    ERROR=dict(
+    ERROR=state(
         msg=[
             "ERROR:",
             "You broke the game."
@@ -23,7 +46,7 @@ stateWithName = dict(
         stateAfterTimeLimitExceeded="ERROR",
     ),
 
-    MENU=dict(
+    MENU=state(
         msg=[
             'Daniel Shaver',
             'Simulator',
@@ -43,7 +66,7 @@ stateWithName = dict(
         stateAfterTimeLimitExceeded="MENU",
     ),
 
-    MISTAKE=dict(
+    MISTAKE=state(
         msg=[
             'Officer Langley:',
             "Don't!"
@@ -60,13 +83,13 @@ stateWithName = dict(
         stateAfterTimeLimitExceeded="BEING_SHOT",
     ),
 
-    BEING_SHOT=dict(),
+    BEING_SHOT=state(),
 
-    GAME_OVER=dict(),
+    GAME_OVER=state(),
 
-    START=dict(),
+    START=state(),
 
-    FIRST_COMMAND=dict(
+    FIRST_COMMAND=state(
         msg=[
             'Officer Brailsford:',
             'Stop! Stop!',
@@ -87,7 +110,7 @@ stateWithName = dict(
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
 
-    WAIT=dict(
+    WAIT=state(
         stateAfterInput=[
             "MISTAKE",
             "MISTAKE",
@@ -100,7 +123,7 @@ stateWithName = dict(
         stateAfterTimeLimitExceeded="WHO_ELSE",
     ),
 
-    WHO_ELSE=dict(
+    WHO_ELSE=state(
         msg=[
             'The first letter of',
             'the alphabet is B?'
@@ -117,7 +140,7 @@ stateWithName = dict(
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
 
-    NOBODY_ELSE=dict(
+    NOBODY_ELSE=state(
         msg=[
             'The first letter of',
             'the alphabet is A?'
@@ -134,7 +157,7 @@ stateWithName = dict(
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
 
-    POSITIVE=dict(
+    POSITIVE=state(
         msg=[
             'Are you positive?'
         ],
@@ -150,7 +173,7 @@ stateWithName = dict(
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
 
-    FTC=dict(
+    FTC=state(
         msg=[
             'OK. Apparently, we',
             'have a failure for',
@@ -169,7 +192,7 @@ stateWithName = dict(
         stateAfterTimeLimitExceeded="AGAIN",
     ),
 
-    AGAIN=dict(
+    AGAIN=state(
         msg=[
             "I've got to go over",
             'some of them again.',
@@ -189,7 +212,7 @@ stateWithName = dict(
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
 
-    THREAT=dict(
+    THREAT=state(
         msg=[
             'If you make a mistake',
             'another mistake,',
@@ -211,7 +234,7 @@ stateWithName = dict(
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
 
-    QUESTION=dict(
+    QUESTION=state(
         msg=[
             "[You try to ask",
             "what's going on]",
@@ -228,7 +251,7 @@ stateWithName = dict(
         stateAfterTimeLimitExceeded="SHUT_UP",
     ),
 
-    SHUT_UP=dict(
+    SHUT_UP=state(
         msg=[
             "Shut up! I'm not here",
             "to be tactful or",
@@ -247,21 +270,42 @@ stateWithName = dict(
         stateAfterTimeLimitExceeded="CROSS_ARMS",
     ),
 
-    CROSS_ARMS=dict(
+    CROSS_ARMS=state(
         msg=[
             "[You cross your arms",
             "unconciously]",
         ],
         stateAfterInput=[
-            "CROSS_ARMS",
-            "CROSS_ARMS",
-            "CROSS_ARMS",
-            "CROSS_ARMS",
-            "CROSS_ARMS",
-            "CROSS_ARMS",
+            "DID_I",
+            "DID_I",
+            "DID_I",
+            "DID_I",
+            "DID_I",
+            "DID_I",
         ],
         timeLimitFrames="180",
-        stateAfterTimeLimitExceeded="CROSS_ARMS",
+        stateAfterTimeLimitExceeded="DID_I",
+    ),
+
+    DID_I=state(
+        msg=[
+            "For one thing, did I",
+            "tell you to move,",
+            "young man?",
+        ],
+        stateAfterInput=[
+            "UNCROSS_ARMS",
+            "UNCROSS_ARMS",
+            "UNCROSS_ARMS",
+            "UNCROSS_ARMS",
+            "UNCROSS_ARMS",
+            "UNCROSS_ARMS",
+        ],
+        timeLimitFrames="180",
+        stateAfterTimeLimitExceeded="UNCROSS_ARMS",
+    ),
+
+    UNCROSS_ARMS=state(
     ),
 )
 
@@ -278,13 +322,16 @@ def main():
 
 def cppFromStates(stateWithName):
     namesAndStates = list(stateWithName.items())
-    template = string.Template("""
+    template = string.Template(r"""
 $names_states
 
 void printMsgOfState(State state) {
   char *msg = {};
   switch (state) {
 $casesPrintMsgOfState
+  default:
+    msg = new char[1]{'\x0'};
+    break;
   }
   arduboy.print(msg);
   delete msg;
@@ -302,7 +349,7 @@ int timeLimitFrames(State state) {
   switch (state) {
 $casesTimeLimitFrames
   default:
-    return INT_MAX;
+    return 0;
   }
 }
 
