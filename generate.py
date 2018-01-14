@@ -10,8 +10,7 @@ def state(
         stateNext=None):
     result = {}
     if msg is not None:
-        if len(msg) > 8:
-            print("Warning: msg longer than 8 lines", file=sys.stderr)
+        assert len(msg) <= 8, "msg longer than 8 lines"
         result["msg"] = msg
     if timeLimitFrames is not None:
         result["timeLimitFrames"] = timeLimitFrames
@@ -49,7 +48,7 @@ stateWithName = dict(
             'to play'
         ],
         stateAfterInput=[
-            "PROBLEMS_UNDERSTANDING", # TODO: change back to START
+            "YOU_ARE", # TODO: change back to START
             "START",
             "START",
             "START",
@@ -282,7 +281,65 @@ stateWithName = dict(
         timeLimitFrames="180",
     ),
 
-    CAN_I_GO=state(),
+    CAN_I_GO=state(
+        msg=[
+            "Woman With You:",
+            "Can I go to my room?",
+        ],
+        stateNext="YOU_ARE",
+        timeLimitFrames="180",
+    ),
+
+    YOU_ARE=state(
+        msg=[
+            "Officer Brailsford:",
+            "No, you're not going",
+            "to do anything but",
+            "come towards us.",
+        ],
+        stateNext="YOUNG_MAN",
+        timeLimitFrames="180",
+    ),
+
+    YOUNG_MAN=state(
+        msg=[
+            "Young man, you are",
+            "not to move. You are",
+            "to put your eyes",
+            "down and look down at",
+            "the carpet. You are",
+            "to keep your fingers",
+            "interlaced behind",
+            "your head.",
+        ],
+        stateNext="KEEP_FEET_CROSSED",
+        timeLimitFrames="180",
+    ),
+
+    KEEP_FEET_CROSSED=state(
+        msg=[
+            "You are to keep your",
+            "feet crossed. If you",
+            "move, we're going to",
+            "consider that a",
+            "threat, and we are",
+            "going to deal with",
+            "it, and you may not",
+            "survive.",
+        ],
+        stateNext="DO_YOU_UNDERSTAND",
+        timeLimitFrames="180",
+    ),
+
+    DO_YOU_UNDERSTAND=state(
+        msg=[
+            "Do you understand me?",
+        ],
+        stateNext="YOUNG_LADY",
+        timeLimitFrames="180",
+    ),
+
+    YOUNG_LADY=state(),
 )
 
 def main():
