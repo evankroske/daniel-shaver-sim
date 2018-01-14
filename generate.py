@@ -10,6 +10,8 @@ def state(
         stateNext=None):
     result = {}
     if msg is not None:
+        if len(msg) > 8:
+            print("Warning: msg longer than 8 lines", file=sys.stderr)
         result["msg"] = msg
     if timeLimitFrames is not None:
         result["timeLimitFrames"] = timeLimitFrames
@@ -47,7 +49,7 @@ stateWithName = dict(
             'to play'
         ],
         stateAfterInput=[
-            "PRETZEL", # TODO: change back to START
+            "PROBLEMS_UNDERSTANDING", # TODO: change back to START
             "START",
             "START",
             "START",
@@ -267,7 +269,20 @@ stateWithName = dict(
         timeLimitFrames="180",
     ),
 
-    PROBLEMS_UNDERSTANDING=state(),
+    PROBLEMS_UNDERSTANDING=state(
+        msg=[
+            "Alright. So you're",
+            "not going to have",
+            "any problems",
+            "understanding",
+            "anything that I tell",
+            "you, right?",
+        ],
+        stateNext="CAN_I_GO",
+        timeLimitFrames="180",
+    ),
+
+    CAN_I_GO=state(),
 )
 
 def main():
