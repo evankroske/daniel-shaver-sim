@@ -253,12 +253,21 @@ stateWithName = dict(
             "The first letter of",
             "the alphabet is B?",
         ],
-        stateAfterInput=["DRUNK"] + (["MISTAKE"] * 5)
+        stateAfterInput=["DRUNK"] + (["MISTAKE"] * 5),
         timeLimitFrames="180",
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
 
-    DRUNK=state(),
+    DRUNK=state(
+        msg=[
+            "Alright. Are you",
+            "both drunk?",
+        ],
+        stateNext="PROBLEMS_UNDERSTANDING",
+        timeLimitFrames="180",
+    ),
+
+    PROBLEMS_UNDERSTANDING=state(),
 )
 
 def main():
