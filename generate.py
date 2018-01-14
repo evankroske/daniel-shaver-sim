@@ -63,14 +63,7 @@ stateWithName = dict(
             'Officer Langley:',
             "Don't!"
         ],
-        stateAfterInput=[
-            "BEING_SHOT",
-            "BEING_SHOT",
-            "BEING_SHOT",
-            "BEING_SHOT",
-            "BEING_SHOT",
-            "BEING_SHOT",
-        ],
+        stateAfterInput=["BEING_SHOT"] * 6,
         timeLimitFrames="90",
         stateAfterTimeLimitExceeded="BEING_SHOT",
     ),
@@ -103,14 +96,7 @@ stateWithName = dict(
     ),
 
     WAIT=state(
-        stateAfterInput=[
-            "MISTAKE",
-            "MISTAKE",
-            "MISTAKE",
-            "MISTAKE",
-            "MISTAKE",
-            "MISTAKE",
-        ],
+        stateAfterInput=["MISTAKE"] * 6,
         timeLimitFrames="600",
         stateAfterTimeLimitExceeded="WHO_ELSE",
     ),
@@ -172,14 +158,7 @@ stateWithName = dict(
             'you to comprehend',
             'simple instructions.'
         ],
-        stateAfterInput=[
-            "AGAIN",
-            "AGAIN",
-            "AGAIN",
-            "AGAIN",
-            "AGAIN",
-            "AGAIN",
-        ],
+        stateAfterInput=["AGAIN"] * 6,
         timeLimitFrames="90",
         stateAfterTimeLimitExceeded="AGAIN",
     ),
@@ -192,14 +171,7 @@ stateWithName = dict(
             'hear and understand',
             'me?'
         ],
-        stateAfterInput=[
-            "THREAT",
-            "THREAT",
-            "THREAT",
-            "THREAT",
-            "THREAT",
-            "THREAT",
-        ],
+        stateAfterInput=["THREAT"] * 6,
         timeLimitFrames="180",
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
@@ -214,14 +186,7 @@ stateWithName = dict(
             'shot. Do you',
             'understand that?'
         ],
-        stateAfterInput=[
-            "QUESTION",
-            "QUESTION",
-            "QUESTION",
-            "QUESTION",
-            "QUESTION",
-            "QUESTION",
-        ],
+        stateAfterInput=["QUESTION"] * 6,
         timeLimitFrames="180",
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
@@ -283,7 +248,17 @@ stateWithName = dict(
         ],
     ),
 
-    REPEAT_QUESTION=state(),
+    REPEAT_QUESTION=state(
+        msg=[
+            "The first letter of",
+            "the alphabet is B?",
+        ],
+        stateAfterInput=["DRUNK"] + (["MISTAKE"] * 5)
+        timeLimitFrames="180",
+        stateAfterTimeLimitExceeded="MISTAKE",
+    ),
+
+    DRUNK=state(),
 )
 
 def main():
