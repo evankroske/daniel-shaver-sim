@@ -59,7 +59,6 @@ stateWithName = dict(
 
     MISTAKE=state(
         msg=[
-            'Officer Langley:',
             "Don't!",
         ],
         stateAfterInput=["BEING_SHOT"] * 6,
@@ -75,12 +74,12 @@ stateWithName = dict(
 
     FIRST_COMMAND=state(
         msg=[
-            'Officer Brailsford:',
             "Stop! Stop! Get on",
             "the ground! Both of",
             "you! Lay down on the",
             "ground! Lay down on",
             "the ground!",
+            "",
             "",
             "A: Lie on the ground",
         ],
@@ -276,7 +275,6 @@ stateWithName = dict(
 
     YOU_ARE=state(
         msg=[
-            "Officer Brailsford:",
             "No, you're not going",
             "to do anything but",
             "come towards us.",
