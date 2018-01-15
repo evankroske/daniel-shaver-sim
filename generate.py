@@ -30,10 +30,10 @@ stateWithName = dict(
     ERROR=state(
         msg=[
             "ERROR:",
-            "You broke the game."
+            "You broke the game.",
             "",
             "Please restart your",
-            "Arduboy."
+            "Arduboy.",
         ],
         stateNext="ERROR",
         timeLimitFrames="INT_MAX",
@@ -44,25 +44,23 @@ stateWithName = dict(
             'Daniel Shaver',
             'Simulator',
             '',
-            'Press any button',
-            'to play'
+            '',
+            '',
+            '',
+            '',
+            'A: Play',
         ],
         stateAfterInput=[
-            "YOU_ARE", # TODO: change back to START
-            "START",
-            "START",
-            "START",
-            "START",
-            "START",
-        ],
-        timeLimitFrames="60000",
+            "START", # TODO: change back to START
+        ] + (["MENU"] * 5),
+        timeLimitFrames="INT_MAX",
         stateAfterTimeLimitExceeded="MENU",
     ),
 
     MISTAKE=state(
         msg=[
             'Officer Langley:',
-            "Don't!"
+            "Don't!",
         ],
         stateAfterInput=["BEING_SHOT"] * 6,
         timeLimitFrames="90",
@@ -78,20 +76,15 @@ stateWithName = dict(
     FIRST_COMMAND=state(
         msg=[
             'Officer Brailsford:',
-            'Stop! Stop!',
-            'Hit the A button!',
-            'Both of you!',
-            'Press the A Button!',
-            'Press the A Button!'
+            "Stop! Stop! Get on",
+            "the ground! Both of",
+            "you! Lay down on the",
+            "ground! Lay down on",
+            "the ground!",
+            "",
+            "A: Lie on the ground",
         ],
-        stateAfterInput=[
-            "WAIT",
-            "MISTAKE",
-            "MISTAKE",
-            "MISTAKE",
-            "MISTAKE",
-            "MISTAKE",
-        ],
+        stateAfterInput=["WAIT"] + (["MISTAKE"] * 5),
         timeLimitFrames="90",
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
@@ -104,50 +97,48 @@ stateWithName = dict(
 
     WHO_ELSE=state(
         msg=[
-            'The first letter of',
-            'the alphabet is B?'
+            "Who else is in the",
+            "room?",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "A: \"Nobody\"",
         ],
-        stateAfterInput=[
-            "NOBODY_ELSE",
-            "MISTAKE",
-            "MISTAKE",
-            "MISTAKE",
-            "MISTAKE",
-            "MISTAKE",
-        ],
+        stateAfterInput=["NOBODY_ELSE"] + (["MISTAKE"] * 5),
         timeLimitFrames="180",
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
 
     NOBODY_ELSE=state(
         msg=[
-            'The first letter of',
-            'the alphabet is A?'
+            "Nobody else is in the",
+            "room?",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "A: \"Nobody\"",
         ],
-        stateAfterInput=[
-            "POSITIVE",
-            "POSITIVE",
-            "MISTAKE",
-            "MISTAKE",
-            "MISTAKE",
-            "MISTAKE",
-        ],
+        stateAfterInput=["POSITIVE"] + (["MISTAKE"] * 5),
         timeLimitFrames="180",
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
 
     POSITIVE=state(
         msg=[
-            'Are you positive?'
+            "Are you positive?",
+            "",
+            "",
+            "",
+            "",
+            "A: \"Nobody.",
+            "   Absolutely",
+            "   positive\"",
         ],
-        stateAfterInput=[
-            "FTC",
-            "FTC",
-            "MISTAKE",
-            "MISTAKE",
-            "MISTAKE",
-            "MISTAKE",
-        ],
+        stateAfterInput=["FTC"] + (["MISTAKE"] * 5),
         timeLimitFrames="180",
         stateAfterTimeLimitExceeded="MISTAKE",
     ),
@@ -344,9 +335,9 @@ stateWithName = dict(
 
 def main():
     with open(
-            "daniel-shaver-sim.ino.template"
+            "daniel-shaver-sim.ino.template",
         ) as f, open(
-            "daniel-shaver-sim.ino", "w"
+            "daniel-shaver-sim.ino", "w",
         ) as out:
         template = string.Template(f.read())
         out.write(

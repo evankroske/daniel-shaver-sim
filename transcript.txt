@@ -1,8 +1,4 @@
-Brailsford: Stop! Stop!
-Get on the ground!
-Both of you!
-Lay down on the ground!
-Lay down on the ground!
+Brailsford: Stop! Stop! Get on the ground! Both of you! Lay down on the ground! Lay down on the ground!
 [wait]
 Who else is in the room?
 Daniel: Nobody
