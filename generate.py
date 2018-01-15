@@ -220,15 +220,29 @@ stateWithName = dict(
             "You:",
             "No sir no sir no sir",
         ],
+        stateNext="PUT_BOTH_OF",
+        timeLimitFrames="180",
+    ),
+
+    PUT_BOTH_OF=state(
+        msg=[
+            "Put both of your",
+            "hands on top of your",
+            "head and interlace",
+            "your fingers. Take",
+            "your feet and cross",
+            "your left foot over",
+            "your right foot",
+        ],
         stateNext="PRETZEL",
         timeLimitFrames="180",
     ),
 
     PRETZEL=state(
         msg=[
-            "Press and hold A and",
-            "B, and press up and",
-            "then down.",
+            "[Press and hold A and",
+            "B, and press Up and",
+            "then Down to obey]",
         ],
     ),
 
