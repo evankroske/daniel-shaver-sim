@@ -134,9 +134,9 @@ stateWithName = dict(
             "",
             "",
             "",
+            "",
             "A: \"Nobody.",
-            "   Absolutely",
-            "   positive\"",
+            "Absolutely positive\"",
         ],
         stateAfterInput=["FTC"] + (["MISTAKE"] * 5),
         timeLimitFrames="180",
@@ -150,9 +150,8 @@ stateWithName = dict(
             'you to comprehend',
             'simple instructions.'
         ],
-        stateAfterInput=["AGAIN"] * 6,
+        stateNext="AGAIN",
         timeLimitFrames="90",
-        stateAfterTimeLimitExceeded="AGAIN",
     ),
 
     AGAIN=state(
@@ -162,6 +161,9 @@ stateWithName = dict(
             'OK, can you both',
             'hear and understand',
             'me?'
+            "",
+            "",
+            "A: \"Yes\"",
         ],
         stateAfterInput=["THREAT"] * 6,
         timeLimitFrames="180",
@@ -176,20 +178,12 @@ stateWithName = dict(
             "possibility you're",
             'both going to get',
             'shot. Do you',
-            'understand that?'
+            'understand that?',
+            "A: Ask a question",
         ],
-        stateAfterInput=["QUESTION"] * 6,
+        stateAfterInput=["SHUT_UP"] * 6,
         timeLimitFrames="180",
         stateAfterTimeLimitExceeded="MISTAKE",
-    ),
-
-    QUESTION=state(
-        msg=[
-            "[You try to ask",
-            "what's going on]",
-        ],
-        stateNext="SHUT_UP",
-        timeLimitFrames="90",
     ),
 
     SHUT_UP=state(
@@ -198,15 +192,10 @@ stateWithName = dict(
             "to be tactful or",
             "diplomatic with you.",
             "You listen, you obey",
-        ],
-        stateNext="CROSS_ARMS",
-        timeLimitFrames="180",
-    ),
-
-    CROSS_ARMS=state(
-        msg=[
-            "[You cross your arms",
-            "unconciously]",
+            "",
+            "",
+            "",
+            "A: Cross your arms",
         ],
         stateNext="DID_I",
         timeLimitFrames="180",
@@ -217,6 +206,11 @@ stateWithName = dict(
             "For one thing, did I",
             "tell you to move,",
             "young man?",
+            "",
+            "",
+            "",
+            "",
+            "A: Uncross your arms",
         ],
         stateNext="UNCROSS_ARMS",
         timeLimitFrames="180",
@@ -224,8 +218,7 @@ stateWithName = dict(
 
     UNCROSS_ARMS=state(
         msg=[
-            "[You put your hands",
-            "back out]",
+            "You:",
             "No sir no sir no sir",
         ],
         stateNext="PRETZEL",
