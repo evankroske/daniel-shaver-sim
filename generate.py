@@ -96,9 +96,24 @@ stateWithName = dict(
     ),
 
     WAIT=state(
-        stateAfterInput=["MISTAKE"] * 6,
+        stateAfterInput=["WAIT_MISTAKE"] * 6,
         timeLimitFrames="600",
         stateAfterTimeLimitExceeded="WHO_ELSE",
+    ),
+
+    WAIT_MISTAKE=state(
+        msg=[
+            "Shut up! Did I ask",
+            "you a question?",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "A: \"No sir\"",
+        ],
+        stateNext="WAIT",
+        timeLimitFrames="180",
     ),
 
     WHO_ELSE=state(
