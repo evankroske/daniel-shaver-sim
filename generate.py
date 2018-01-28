@@ -308,6 +308,8 @@ stateWithName = dict(
             "understanding",
             "anything that I tell",
             "you, right?",
+            "",
+            "A: \"Correct\"",
         ],
         stateNext="CAN_I_GO",
         timeLimitFrames="180",
