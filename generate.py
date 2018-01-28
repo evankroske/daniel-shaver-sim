@@ -270,8 +270,14 @@ stateWithName = dict(
 
     REPEAT_QUESTION=state(
         msg=[
-            "The first letter of",
-            "the alphabet is B?",
+            "Who else is in the",
+            "room?",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "A: \"Nobody\"",
         ],
         stateAfterInput=["DRUNK"] + (["MISTAKE"] * 5),
         timeLimitFrames="180",
