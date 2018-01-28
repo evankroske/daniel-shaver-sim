@@ -288,9 +288,16 @@ stateWithName = dict(
         msg=[
             "Alright. Are you",
             "both drunk?",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "A: \"No\"",
         ],
-        stateNext="PROBLEMS_UNDERSTANDING",
+        stateAfterInput=["PROBLEMS_UNDERSTANDING"] + (["MISTAKE"] * 5),
         timeLimitFrames="180",
+        stateAfterTimeLimitExceeded="MISTAKE",
     ),
 
     PROBLEMS_UNDERSTANDING=state(
