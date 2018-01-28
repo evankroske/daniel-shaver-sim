@@ -367,6 +367,13 @@ stateWithName = dict(
     DO_YOU_UNDERSTAND=state(
         msg=[
             "Do you understand me?",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "A: \"Yes sir\"",
         ],
         stateNext="YOUNG_LADY",
         timeLimitFrames="180",
