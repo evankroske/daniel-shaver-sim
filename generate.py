@@ -443,6 +443,22 @@ stateWithName = dict(
     ),
 
     YOU_ARE_2=state(
+        msg=[
+            "You are to put both",
+            "of your hands palms",
+            "down straight out in",
+            "front of you. Push",
+            "yourself up to a",
+            "kneeling position.",
+        ],
+        stateNext="PRE_I_SAID",
+        timeLimitFrames="180",
+    ),
+
+    PRE_I_SAID=state(
+    ),
+
+    I_SAID=state(
     ),
 )
 
