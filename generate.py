@@ -51,7 +51,7 @@ stateWithName = dict(
             'A: Play',
         ],
         stateAfterInput=[
-            "START", # TODO: change back to START
+            "DO_YOU_UNDERSTAND", # TODO: change back to START
         ] + (["MENU"] * 5),
         timeLimitFrames="INT_MAX",
         stateAfterTimeLimitExceeded="MENU",
@@ -375,11 +375,75 @@ stateWithName = dict(
             "",
             "A: \"Yes sir\"",
         ],
-        stateNext="YOUNG_LADY",
+        stateAfterInput=["YOUNG_LADY"] + (["MISTAKE"] * 5),
+        stateAfterTimeLimitExceeded="MISTAKE",
         timeLimitFrames="180",
     ),
 
-    YOUNG_LADY=state(),
+    YOUNG_LADY=state(
+        msg=[
+            "Young lady, shut up",
+            "and listen. Alright.",
+            "You are to keep your",
+            "feet crossed. Take",
+            "both of your hands",
+            "and put them flat in",
+            "front of you.",
+        ],
+        stateNext="YOUNG_LADY_2",
+        timeLimitFrames="180",
+    ),
+
+    YOUNG_LADY_2=state(
+        msg=[
+            "You are to push",
+            "yourself up to a",
+            "kneeling position.",
+            "Kneeling position.",
+            "Now, put both your",
+            "hands in the air and",
+            "crawl towards us.",
+        ],
+        stateNext="PRE_STOP",
+        timeLimitFrames="180",
+    ),
+
+    PRE_STOP=state(
+        msg=[
+            "[You uncross your",
+            "legs without",
+            "thinking]",
+        ],
+        stateNext="STOP",
+        timeLimitFrames="90",
+    ),
+
+    STOP=state(
+        msg=[
+            "Stop!",
+        ],
+        stateNext="YOUNG_MAN_2",
+        timeLimitFrames="90",
+    ),
+
+    YOUNG_MAN_2=state(
+        msg=[
+            "Young man, listen to",
+            "my instructions and",
+            "do not make a",
+            "mistake! You are to",
+            "keep your legs",
+            "crossed! Do you",
+            "understand me?",
+            "A: \"Yes sir\"",
+        ],
+        stateAfterInput=["YOU_ARE_2"] + (["MISTAKE"] * 5),
+        stateAfterTimeLimitExceeded="MISTAKE",
+        timeLimitFrames="180",
+    ),
+
+    YOU_ARE_2=state(
+    ),
 )
 
 def main():
