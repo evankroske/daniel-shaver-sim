@@ -565,10 +565,10 @@ stateWithName = dict(
 
     IF_YOUR=state(
         msg=[
-            "If your hands go back"
+            "If your hands go back",
             "to the small of your",
-            "back, we are going to"
-            "shoot you! Do you"
+            "back, we are going to",
+            "shoot you! Do you",
             "understand me?",
             "",
             "",
