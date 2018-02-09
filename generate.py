@@ -500,6 +500,32 @@ stateWithName = dict(
     ),
 
     PUT_YOUR_HANDS_UP=state(
+        msg=[
+            "PUT YOUR HANDS UP IN",
+            "THE AIR! HANDS UP IN",
+            "THE AIR!",
+        ],
+        stateNext="YOU_DO_THAT",
+        timeLimitFrames="90"
+    ),
+
+    YOU_DO_THAT=state(
+        msg=[
+            "You do that again",
+            "we're shooting you!",
+            "Do you understand?",
+            "",
+            "",
+            "",
+            "A: \"Please do not",
+            "shoot me\"",
+        ],
+        stateAfterInput=["THEN_LISTEN"] + (["MISTAKE"] * 5),
+        stateAfterTimeLimitExceeded="MISTAKE",
+        timeLimitFrames="180",
+    ),
+
+    THEN_LISTEN=state(
     ),
 )
 
