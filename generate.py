@@ -51,7 +51,7 @@ stateWithName = dict(
             'A: Play',
         ],
         stateAfterInput=[
-            "DO_YOU_UNDERSTAND", # TODO: change back to START
+            "PRE_I_SAID", # TODO: change back to START
         ] + (["MENU"] * 5),
         timeLimitFrames="INT_MAX",
         stateAfterTimeLimitExceeded="MENU",
@@ -462,7 +462,7 @@ stateWithName = dict(
             "thinking]",
         ],
         stateNext="I_SAID",
-        timeLimitFrames="180",
+        timeLimitFrames="90",
     ),
 
     I_SAID=state(
@@ -482,6 +482,24 @@ stateWithName = dict(
     ),
 
     I_DIDNT_SAY=state(
+        msg=[
+            "I didn't say this was",
+            "a conversation-",
+        ],
+        stateNext="PRE_PUT_YOUR_HANDS_UP",
+        timeLimitFrames="180"
+    ),
+
+    PRE_PUT_YOUR_HANDS_UP=state(
+        msg=[
+            "[You lower your hands",
+            "a little]",
+        ],
+        stateNext="PUT_YOUR_HANDS_UP",
+        timeLimitFrames="90"
+    ),
+
+    PUT_YOUR_HANDS_UP=state(
     ),
 )
 
