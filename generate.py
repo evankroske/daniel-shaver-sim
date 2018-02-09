@@ -526,6 +526,68 @@ stateWithName = dict(
     ),
 
     THEN_LISTEN=state(
+        msg=[
+            "Then listen to my",
+            "instructions!",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "A: \"I'm trying to-\"",
+        ],
+        stateAfterInput=["DONT_TALK"] + (["MISTAKE"] * 5),
+        stateAfterTimeLimitExceeded="MISTAKE",
+        timeLimitFrames="180",
+    ),
+
+    DONT_TALK=state(
+        msg=[
+            "DON'T TALK! LISTEN!",
+        ],
+        stateNext="HANDS_STRAIGHT",
+        timeLimitFrames="90"
+    ),
+
+    HANDS_STRAIGHT=state(
+        msg=[
+            "Hands straight up in",
+            "the air! Do not put",
+            "your hands down for",
+            "any reason! If you",
+            "think you're going to",
+            "fall, you'd better",
+            "fall on your face.",
+        ],
+        stateNext="IF_YOUR",
+        timeLimitFrames="180",
+    ),
+
+    IF_YOUR=state(
+        msg=[
+            "If your hands go back"
+            "to the small of your",
+            "back, we are going to"
+            "shoot you! Do you"
+            "understand me?",
+            "",
+            "",
+            "A: \"Yes sir\"",
+        ],
+        stateAfterInput=["YOU_BEGIN"] + (["MISTAKE"] * 5),
+        stateAfterTimeLimitExceeded="MISTAKE",
+        timeLimitFrames="180",
+    ),
+
+    YOU_BEGIN=state(
+        msg=[
+            "[You begin sobbing]",
+        ],
+        stateNext="CRAWL",
+        timeLimitFrames="180",
+    ),
+
+    CRAWL=state(
     ),
 )
 
