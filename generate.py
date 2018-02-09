@@ -456,9 +456,32 @@ stateWithName = dict(
     ),
 
     PRE_I_SAID=state(
+        msg=[
+            "[You uncross your",
+            "legs again without",
+            "thinking]",
+        ],
+        stateNext="I_SAID",
+        timeLimitFrames="180",
     ),
 
     I_SAID=state(
+        msg=[
+            "I SAID KEEP YOUR LEGS",
+            "CROSSED!",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "A: \"I'm sorry\"",
+        ],
+        stateAfterInput=["I_DIDNT_SAY"] + (["MISTAKE"] * 5),
+        stateAfterTimeLimitExceeded="MISTAKE",
+        timeLimitFrames="180",
+    ),
+
+    I_DIDNT_SAY=state(
     ),
 )
 
