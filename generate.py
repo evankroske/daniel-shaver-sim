@@ -51,7 +51,7 @@ stateWithName = dict(
             'A: Play',
         ],
         stateAfterInput=[
-            "PRE_I_SAID", # TODO: change back to START
+            "START",
         ] + (["MENU"] * 5),
         timeLimitFrames="INT_MAX",
         stateAfterTimeLimitExceeded="MENU",
