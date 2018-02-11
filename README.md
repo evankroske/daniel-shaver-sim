@@ -2,7 +2,7 @@
 
 ## Video
 
-## How to Play
+## How to Install the Game
 1. [Buy an Arduboy.](https://arduboy.com/)
 1. [Install the Arduino IDE and the Arduboy libraries.](https://community.arduboy.com/t/quick-start-guide/2790)
 1. Save [this file](https://raw.githubusercontent.com/evankroske/daniel-shaver-sim/master/daniel-shaver-sim.ino) as "daniel-shaver-sim.ino".
