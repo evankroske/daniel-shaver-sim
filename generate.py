@@ -588,6 +588,22 @@ stateWithName = dict(
     ),
 
     CRAWL=state(
+        msg=[
+            "Crawl towards me!",
+            "CRAWL TOWARDS ME!",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "A: Begin crawling",
+        ],
+        stateAfterInput=["PRE_MISTAKE"] + (["MISTAKE"] * 5),
+        stateAfterTimeLimitExceeded="MISTAKE",
+        timeLimitFrames="180",
+    ),
+
+    PRE_MISTAKE=state(
     ),
 )
 
