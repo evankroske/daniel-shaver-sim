@@ -604,6 +604,13 @@ stateWithName = dict(
     ),
 
     PRE_MISTAKE=state(
+        msg=[
+            "[You reach down to",
+            "pull up your pants",
+            "without thinking]",
+        ],
+        stateNext="MISTAKE",
+        timeLimitFrames="90",
     ),
 )
 
