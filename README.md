@@ -15,3 +15,6 @@
     1. In the menu "Tools &gt; Port:", select the port that ends with "(Arduino Leonardo)".
     1. In the menu "Sketch", select "Upload".
     1. Wait until it says "Done uploading".
+
+## About
+This game is about [the shooting of Daniel Shaver by Mesa PD officer Philip Brailsford](http://wapo.st/2kcyD5N).
