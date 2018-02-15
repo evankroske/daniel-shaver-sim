@@ -34,14 +34,12 @@ static const uint8_t PROGMEM gunshot[] = {
   // Track 2
   // Set tempo to 50
   0x9D, 50,
-  // Set volume to 200
-  0x40, 200,
+  // Set volume
+  0x40, 255,
   // Start volume slide
   0x41, -16,
   // wait 8 ticks
   0x9F + 8,
-  // Slow volume slide
-  0x41, -8,
   // stop channel
   0xFE,
 };
