@@ -51,7 +51,7 @@ stateWithName = dict(
             'A: Play',
         ],
         stateAfterInput=[
-            "BEING_SHOT",
+            "START",
         ] + (["MENU"] * 5),
         timeLimitFrames="INT_MAX",
         stateAfterTimeLimitExceeded="MENU",

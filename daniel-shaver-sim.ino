@@ -255,7 +255,7 @@ State stateAfterInput(State state, int inputIndex) {
   case MENU:
     switch (inputIndex) {
     case 0:
-      return BEING_SHOT;
+      return START;
     case 1:
       return MENU;
     case 2:
