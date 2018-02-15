@@ -10,27 +10,25 @@ int framesSurvived = 0;
 
 static const uint8_t PROGMEM gunshot[] = {
   // Number of tracks
-  0x03,
+  3,
 
   // Addresses of tracks
-  0x00, 0x00,
-  0x03, 0x00,
-  0x06, 0x00,
+  0, 0,
+  3, 0,
+  7, 0,
 
   // Channels
-  0x00,
-  0x00,
-  0x00,
-  // Channel 3, noise
-  0x02,
+  0,
+  0,
+  0,
+  1,
 
-  // Track 0 (mute channel): 3 bytes
+  // Track 0 (mute channel)
   0x40, 0,
   0x9F,
 
-  // Track 1 (unused): 3 bytes
-  0x9F,
-  0x9F,
+  // Track 1 (unused)
+  0xFD, 4, 2,
   0x9F,
 
   // Track 2
@@ -44,11 +42,8 @@ static const uint8_t PROGMEM gunshot[] = {
   0x9F + 8,
   // Slow volume slide
   0x41, -8,
-  // wait 128 ticks
-  0x9F + 64,
-  0x9F + 64,
   // stop channel
-  0x9F,
+  0xFE,
 };
 
 typedef byte State;
