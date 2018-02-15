@@ -1,6 +1,6 @@
 # Daniel Shaver Simulator
 
-## Video
+## [Playthrough Video](https://youtu.be/kUmW422eFns)
 
 ## How to Install the Game
 1. [Buy an Arduboy.](https://arduboy.com/)
