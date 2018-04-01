@@ -1,5 +1,7 @@
 # Daniel Shaver Simulator
 
+![Demo of Daniel Shaver Simulator gameplay](demo.gif)
+
 ## [Playthrough Video](https://youtu.be/kUmW422eFns)
 
 ## How to Install the Game
