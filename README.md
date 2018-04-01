@@ -19,4 +19,4 @@
     1. Wait until it says "Done uploading".
 
 ## About
-This game is about [the shooting of Daniel Shaver by Mesa PD officer Philip Brailsford](http://wapo.st/2kcyD5N).
+This game is about [the shooting of Daniel Shaver by Mesa police officer Philip Brailsford](http://wapo.st/2kcyD5N).
