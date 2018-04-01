@@ -1,4 +1,4 @@
-# Daniel Shaver Simulator
+# Daniel Shaver Simulator: An Arduboy Game About the Shooting of Daniel Shaver
 
 ![Demo of Daniel Shaver Simulator gameplay](demo.gif)
 
